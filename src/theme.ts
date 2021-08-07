@@ -13,7 +13,7 @@ export const theme = unstable_createMuiStrictModeTheme({
       main: '#A6225E',
     },
     background: {
-      paper: '#333',
+      paper: '#222',
       default: '#1a1a1a',
     },
   },
