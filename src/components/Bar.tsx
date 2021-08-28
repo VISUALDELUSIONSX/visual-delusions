@@ -12,7 +12,11 @@ const useStyles = makeStyles<Theme, Props>((theme) => ({
     height: '5px',
     borderRadius: '5px',
     background: (props) =>
-      props.color
+      props.color === 'textPrimary'
+        ? theme.palette.text.primary
+        : props.color === 'textSecondary'
+        ? theme.palette.text.secondary
+        : props.color
         ? theme.palette[props.color].main
         : theme.palette.primary.main,
     margin: (props) => {
@@ -24,7 +28,15 @@ const useStyles = makeStyles<Theme, Props>((theme) => ({
 }));
 
 interface Props {
-  color?: 'error' | 'info' | 'primary' | 'secondary' | 'success' | 'warning';
+  color?:
+    | 'error'
+    | 'info'
+    | 'primary'
+    | 'secondary'
+    | 'success'
+    | 'warning'
+    | 'textPrimary'
+    | 'textSecondary';
   className?: string;
   size?: 'small' | 'default' | 'large';
   align?: 'left' | 'center' | 'right';

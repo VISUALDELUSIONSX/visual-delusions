@@ -9,9 +9,13 @@ export const theme = unstable_createMuiStrictModeTheme({
     primary: {
       main: '#2C813F',
     },
-    secondary: {
-      main: '#A6225E',
+    text: {
+      secondary: '#7E4CCB',
     },
+    secondary: {
+      main: '#3A9197',
+    },
+
     background: {
       paper: '#222',
       default: '#1a1a1a',

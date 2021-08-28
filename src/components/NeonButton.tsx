@@ -2,9 +2,15 @@ import { Button, ButtonProps } from '@material-ui/core';
 import React from 'react';
 import { theme } from '../theme';
 
-const NeonButton: React.FC<ButtonProps> = (props) => {
+interface Props extends ButtonProps {
+  extraColor?: 'textSecondary';
+}
+
+const NeonButton: React.FC<Props> = (props) => {
   const color =
-    !props.color || props.color === 'inherit' || props.color === 'default'
+    props.extraColor === 'textSecondary'
+      ? theme.palette.text.secondary
+      : !props.color || props.color === 'inherit' || props.color === 'default'
       ? 'white'
       : theme.palette[props.color].main;
 

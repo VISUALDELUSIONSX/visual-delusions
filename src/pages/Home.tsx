@@ -1,17 +1,10 @@
-import {
-  Card,
-  Container,
-  Grid,
-  makeStyles,
-  Typography,
-} from '@material-ui/core';
+import { Container, Grid, makeStyles, Typography } from '@material-ui/core';
 import clsx from 'clsx';
 import React from 'react';
 import Bar from '../components/Bar';
 import Category from '../components/Category';
 import NeonButton from '../components/NeonButton';
 import NeonTypography from '../components/NeonTypography';
-import { theme } from '../theme';
 import lighter from '../images/lighter.jpg';
 import hoodie from '../images/hoodie.jpg';
 import canvas from '../images/canvas.jpg';
@@ -63,27 +56,43 @@ const Home = () => {
 
       <section className={clsx(classes.section, classes.shop)}>
         <Container>
-          <NeonTypography variant='h3' color='secondary' gutterBottom>
+          <NeonTypography variant='h3' color='textSecondary' gutterBottom>
             CATEGORIES
           </NeonTypography>
 
           <Bar
-            color='secondary'
+            color='textSecondary'
             style={{ width: '100%', height: '3px', marginBottom: '3rem' }}
           />
 
           <Grid container spacing={6}>
             <Grid item xs={12} sm={6} lg={3}>
-              <Category src={canvas} title='Canvases & Paintings' />
+              <Category
+                src={canvas}
+                title='Canvases & Paintings'
+                href='/shop/canvases'
+              />
             </Grid>
             <Grid item xs={12} sm={6} lg={3}>
-              <Category src={hoodie} title='Hoodies & Sweatshirts' />
+              <Category
+                src={hoodie}
+                title='Hoodies & Sweatshirts'
+                href='/shop/hoodies'
+              />
             </Grid>
             <Grid item xs={12} sm={6} lg={3}>
-              <Category src={lighter} title='Lighters & Accessories' />
+              <Category
+                src={lighter}
+                title='Lighters & Accessories'
+                href='/shop/accessories'
+              />
             </Grid>
             <Grid item xs={12} sm={6} lg={3}>
-              <Category src={jewellery} title='Jewellery' />
+              <Category
+                src={jewellery}
+                title='Jewellery'
+                href='/shop/jewellery'
+              />
             </Grid>
           </Grid>
         </Container>

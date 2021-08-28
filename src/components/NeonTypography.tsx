@@ -4,12 +4,12 @@ import { theme } from '../theme';
 
 const NeonTypography: React.FC<TypographyProps> = (props) => {
   const color =
-    !props.color ||
-    props.color === 'inherit' ||
-    props.color === 'initial' ||
-    props.color === 'textPrimary' ||
-    props.color === 'textSecondary'
+    !props.color || props.color === 'inherit' || props.color === 'initial'
       ? 'white'
+      : props.color === 'textPrimary'
+      ? theme.palette.text.primary
+      : props.color === 'textSecondary'
+      ? theme.palette.text.secondary
       : theme.palette[props.color].main;
 
   const size =

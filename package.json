@@ -28,7 +28,8 @@
     "eject": "react-scripts eject",
     "emulator": "firebase emulators:start --import ./backups/emulator",
     "export": "firebase emulators:export ./backups/emulator",
-    "kill-emulator": "kill-port 4000 9099 8080 5001"
+    "kill-emulator": "kill-port 4000 9099 8080 5001",
+    "deploy": "npm run build && firebase deploy --only hosting"
   },
   "eslintConfig": {
     "extends": [
