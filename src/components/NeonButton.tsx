@@ -3,13 +3,15 @@ import React from 'react';
 import { theme } from '../theme';
 
 interface Props extends ButtonProps {
-  extraColor?: 'textSecondary';
+  extraColor?: 'textSecondary' | 'error';
 }
 
 const NeonButton: React.FC<Props> = (props) => {
   const color =
     props.extraColor === 'textSecondary'
       ? theme.palette.text.secondary
+      : props.extraColor === 'error'
+      ? theme.palette.error.main
       : !props.color || props.color === 'inherit' || props.color === 'default'
       ? 'white'
       : theme.palette[props.color].main;

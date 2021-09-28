@@ -2,15 +2,20 @@ import { Typography, TypographyProps } from '@material-ui/core';
 import React from 'react';
 import { theme } from '../theme';
 
-const NeonTypography: React.FC<TypographyProps> = (props) => {
-  const color =
-    !props.color || props.color === 'inherit' || props.color === 'initial'
-      ? 'white'
-      : props.color === 'textPrimary'
-      ? theme.palette.text.primary
-      : props.color === 'textSecondary'
-      ? theme.palette.text.secondary
-      : theme.palette[props.color].main;
+export default function NeonTypography<C extends React.ElementType>(
+  props: TypographyProps<C, { component?: C }> & {
+    extraColor?: 'info';
+  }
+) {
+  const color = props.extraColor
+    ? theme.palette[props.extraColor].main
+    : !props.color || props.color === 'inherit' || props.color === 'initial'
+    ? 'white'
+    : props.color === 'textPrimary'
+    ? theme.palette.text.primary
+    : props.color === 'textSecondary'
+    ? theme.palette.text.secondary
+    : theme.palette[props.color].main;
 
   const size =
     !props.variant || props.variant === 'inherit' || props.variant === 'srOnly'
@@ -24,10 +29,9 @@ const NeonTypography: React.FC<TypographyProps> = (props) => {
         ...props.style,
         textShadow: `0 0 calc(${shadowSize} / 4) #fff, 0 0 calc(${shadowSize} / 4) #fff, 0 0 ${shadowSize} ${color}, 0 0 ${shadowSize} ${color}, 0 0 calc(${shadowSize} * 1.5) ${color}, 0 0 ${shadowSize} ${color}, 0 0 ${shadowSize} ${color}`,
         letterSpacing: '1.5px',
+        color,
       }}
       {...props}
     />
   );
-};
-
-export default NeonTypography;
+}

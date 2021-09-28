@@ -11,6 +11,7 @@ import {
   ListItem,
   ListItemText,
   Divider,
+  alpha,
 } from '@material-ui/core';
 import NeonTypography from './NeonTypography';
 import { useEffect, useRef, useState } from 'react';
@@ -27,6 +28,8 @@ const useStyles = makeStyles((theme: Theme) => ({
   root: {
     transition: '400ms',
     background: theme.palette.background.default,
+    borderBottom: `1px solid ${theme.palette.secondary.main}`,
+    boxShadow: `0px 5px 5px ${alpha(theme.palette.secondary.main, 0.2)}`,
   },
   rootAnimate: {
     transform: 'translateY(-100%)',
