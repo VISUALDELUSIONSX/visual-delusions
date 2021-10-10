@@ -147,7 +147,7 @@ const Home = () => {
           />
 
           <Grid container direction='column' spacing={2} alignItems='center'>
-            <Grid item style={{ width: '100%', maxWidth: '500px' }}>
+            <Grid item style={{ width: '100%', maxWidth: '600px' }}>
               <a
                 href='mailto:samanthavlachos00@gmail.com'
                 style={{ textDecoration: 'none' }}
@@ -162,7 +162,7 @@ const Home = () => {
               </a>
             </Grid>
 
-            <Grid item style={{ width: '100%', maxWidth: '500px' }}>
+            <Grid item style={{ width: '100%', maxWidth: '600px' }}>
               <a href='tel:14164195618' style={{ textDecoration: 'none' }}>
                 <Card>
                   <CardContent>

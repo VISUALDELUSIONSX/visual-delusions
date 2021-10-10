@@ -21,6 +21,8 @@ import { theme } from '../theme';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+// import { displaySignInDialog } from '../store/authSlice';
+// import { useAppDispatch } from '../hooks/useAppDispatch';
 
 const drawerWidth = 240;
 
@@ -63,6 +65,7 @@ const menuItems = [
 
 const Header = () => {
   const classes = useStyles();
+  // const dispatch = useAppDispatch();
   const headerRef = useRef<HTMLElement>(null);
   const [drawerOpen, setDrawerOpen] = useState(false);
   const mdUp = useMediaQuery(theme.breakpoints.up('md'));
@@ -99,17 +102,28 @@ const Header = () => {
           </NeonTypography>
 
           {mdUp ? (
-            menuItems.map((item) => (
-              <Button
-                component={Link}
-                to={item.href}
+            <>
+              {menuItems.map((item) => (
+                <Button
+                  component={Link}
+                  to={item.href}
+                  color='inherit'
+                  style={{ marginLeft: '0.5rem' }}
+                  size='large'
+                  key={item.href}
+                >
+                  {item.label}
+                </Button>
+              ))}
+              {/* <Button
+                onClick={() => dispatch(displaySignInDialog())}
                 color='inherit'
                 style={{ marginLeft: '0.5rem' }}
                 size='large'
               >
-                {item.label}
-              </Button>
-            ))
+                Login
+              </Button> */}
+            </>
           ) : (
             <IconButton onClick={handleDrawerToggle} color='inherit'>
               <MenuIcon />
@@ -154,6 +168,15 @@ const Header = () => {
                 <ListItemText primary={item.label} />
               </ListItem>
             ))}
+            {/* <ListItem
+              button
+              onClick={() => {
+                dispatch(displaySignInDialog());
+                handleDrawerToggle();
+              }}
+            >
+              <ListItemText primary='Login' />
+            </ListItem> */}
           </List>
         </Drawer>
       )}
