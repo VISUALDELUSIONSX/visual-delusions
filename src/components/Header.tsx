@@ -21,6 +21,8 @@ import { theme } from '../theme';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+import { useAppSelector } from '../hooks/useAppSelector';
+import { useAuth } from 'react-redux-firebase-auth';
 // import { displaySignInDialog } from '../store/authSlice';
 // import { useAppDispatch } from '../hooks/useAppDispatch';
 
@@ -70,6 +72,8 @@ const Header = () => {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const mdUp = useMediaQuery(theme.breakpoints.up('md'));
   const handleDrawerToggle = () => setDrawerOpen((prev) => !prev);
+  const { loaded, user } = useAppSelector((state) => state.auth);
+  const { signOut } = useAuth();
 
   useEffect(() => {
     /* Header animates on mount */
@@ -115,6 +119,20 @@ const Header = () => {
                   {item.label}
                 </Button>
               ))}
+              {loaded && user && (
+                <Button
+                  onClick={signOut}
+                  style={{
+                    marginLeft: '0.5rem',
+                    background: 'darkred',
+                    color: 'white',
+                  }}
+                  size='large'
+                  variant='contained'
+                >
+                  Logout
+                </Button>
+              )}
               {/* <Button
                 onClick={() => dispatch(displaySignInDialog())}
                 color='inherit'
@@ -168,6 +186,9 @@ const Header = () => {
                 <ListItemText primary={item.label} />
               </ListItem>
             ))}
+            <ListItem button onClick={signOut}>
+              <ListItemText primary='Logout' />
+            </ListItem>
             {/* <ListItem
               button
               onClick={() => {
