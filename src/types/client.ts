@@ -8,3 +8,14 @@ export interface User {
   photoUrl: string | null;
   uid: string;
 }
+
+export interface ShopItem {
+  name: string;
+  price: number;
+  description?: string;
+  previewImage?: string;
+  images?: [{ src: string; alt: string }];
+  category: string;
+  id: string;
+  i?: number;
+}
