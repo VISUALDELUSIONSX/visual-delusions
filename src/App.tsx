@@ -11,6 +11,7 @@ import { app } from './services/firebase';
 import reactReduxFirebaseAuthConfig from './reactReduxFirebaseAuthConfig';
 import { Provider } from 'react-redux';
 import PrivateRoute from './components/PrivateRoute';
+import Dialogs from './containers/Dialogs';
 
 function App() {
   return (
@@ -23,7 +24,7 @@ function App() {
         >
           <ThemeProvider theme={theme}>
             <CssBaseline />
-
+            <Dialogs />
             <Header />
             <main>
               <Switch>
