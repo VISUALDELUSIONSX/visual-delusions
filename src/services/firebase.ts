@@ -13,7 +13,7 @@ let config: any = {
   appId: '1:403686251342:web:8599b357dc4fe00d45dc1f',
 };
 
-const app = firebase.initializeApp(config);
+export const app = firebase.initializeApp(config);
 export const auth = firebase.auth(app);
 export const db = firebase.firestore(app);
 export const functions = firebase.functions(app);

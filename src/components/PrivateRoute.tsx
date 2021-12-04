@@ -8,16 +8,26 @@ interface Props extends RouteProps {
 }
 
 const PrivateRoute: React.FC<Props> = ({ component: Component, ...rest }) => {
-  const { user, loading } = useAppSelector((state) => state.auth);
-  return loading ? (
-    <Spinner style={{ margin: '0 auto' }} />
-  ) : (
+  const { user, loaded } = useAppSelector((state: any) => state.auth);
+
+  return loaded ? (
     <Route
       {...rest}
       render={(props) =>
-        user ? <Component {...props} /> : <Redirect to='/login' />
+        user ? (
+          <Component {...props} />
+        ) : (
+          <Redirect
+            to={{
+              pathname: '/login',
+              state: { referrer: rest.path },
+            }}
+          />
+        )
       }
     />
+  ) : (
+    <Spinner style={{ margin: '0 auto' }} />
   );
 };
 

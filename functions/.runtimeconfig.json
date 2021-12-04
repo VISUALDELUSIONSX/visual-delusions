@@ -1,0 +1,8 @@
+{
+  "runtime": {
+    "env": "development"
+  },
+  "fb": {
+    "api_key": "AIzaSyCmEEHFyeZvsi0IuhKAer8LWbvkDSfppS8"
+  }
+}
