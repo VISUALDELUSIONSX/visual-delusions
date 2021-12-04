@@ -7,8 +7,9 @@ export default function NeonTypography<C extends React.ElementType>(
     extraColor?: 'info';
   }
 ) {
-  const color = props.extraColor
-    ? theme.palette[props.extraColor].main
+  const { extraColor, ...rest } = props;
+  const color = extraColor
+    ? theme.palette[extraColor].main
     : !props.color || props.color === 'inherit' || props.color === 'initial'
     ? 'white'
     : props.color === 'textPrimary'
@@ -31,7 +32,7 @@ export default function NeonTypography<C extends React.ElementType>(
         letterSpacing: '1.5px',
         color,
       }}
-      {...props}
+      {...rest}
     />
   );
 }

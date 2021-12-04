@@ -78,6 +78,7 @@ const ShopFilter: React.FC<Props> = ({ categories }) => {
                 />
                 {categories.map((category) => (
                   <FormControlLabel
+                    key={category.value}
                     value={category.value}
                     control={<Radio />}
                     label={
@@ -97,7 +98,6 @@ const ShopFilter: React.FC<Props> = ({ categories }) => {
             />
             <div style={{ boxSizing: 'content-box', padding: '0 8px' }}>
               <Slider
-                aria-label='Price Range'
                 color='secondary'
                 value={priceRange}
                 onChange={(_, val) => setPriceRange(val as number[])}
