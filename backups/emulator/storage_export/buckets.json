@@ -2,6 +2,9 @@
   "buckets": [
     {
       "id": "default-bucket"
+    },
+    {
+      "id": "visualdelusions-b6d13.appspot.com"
     }
   ]
 }

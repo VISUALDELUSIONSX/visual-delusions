@@ -19,3 +19,12 @@ export interface ShopItem {
   id: string;
   i?: number;
 }
+
+export interface Category {
+  name: string;
+  slug: string;
+}
+
+export interface FileWithId extends File {
+  id: string;
+}

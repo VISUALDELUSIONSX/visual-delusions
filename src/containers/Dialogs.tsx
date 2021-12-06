@@ -1,5 +1,11 @@
+import AddCategoryDialogContainer from './AddCategoryDialogContainer';
+
 const Dialogs = () => {
-  return <></>;
+  return (
+    <>
+      <AddCategoryDialogContainer />
+    </>
+  );
 };
 
 export default Dialogs;

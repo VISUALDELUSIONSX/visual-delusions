@@ -1,4 +1,5 @@
 import {
+  Button,
   Card,
   CardContent,
   Container,
@@ -17,6 +18,9 @@ import lighter from '../images/lighter.jpg';
 import hoodie from '../images/hoodie.jpg';
 import canvas from '../images/canvas.jpg';
 import jewellery from '../images/jewellery.jpg';
+import { useAppSelector } from '../hooks/useAppSelector';
+import { useAppDispatch } from '../hooks/useAppDispatch';
+import { setIsAddCategoryDialogOpen } from '../store/simpleValuesSlice';
 // import { useForm } from 'react-hook-form';
 
 const useStyles = makeStyles((theme) => ({
@@ -40,6 +44,9 @@ const useStyles = makeStyles((theme) => ({
 
 const Home = () => {
   const classes = useStyles();
+  const dispatch = useAppDispatch();
+  // @ts-ignore
+  const isAdmin = useAppSelector((state) => state.auth.user?.isAdmin);
   // const [loadingContactMessage, setLoadingContactMessage] = useState(false);
   // const {
   //   register,
@@ -91,6 +98,16 @@ const Home = () => {
           >
             CATEGORIES
           </NeonTypography>
+
+          {isAdmin && (
+            <Button
+              onClick={() => dispatch(setIsAddCategoryDialogOpen(true))}
+              variant='contained'
+              style={{ marginBottom: '1rem' }}
+            >
+              Add Category
+            </Button>
+          )}
 
           <Bar
             color='info'
