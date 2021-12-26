@@ -1,5 +1,5 @@
 import { Button, Dialog, Grid, TextField, Typography } from '@material-ui/core';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { FileWithId } from '../types/client';
 import ImageDropzone from './ImageDropzone';
@@ -25,8 +25,20 @@ const AddCategoryDialog: React.FC<Props> = ({
   onSubmit,
   loading,
 }) => {
-  const { register, handleSubmit, errors } = useForm<FormDetails>();
+  const { register, handleSubmit, errors, setValue, watch } =
+    useForm<FormDetails>();
   const [img, setImg] = useState<FileWithId>();
+  const name = watch('name');
+
+  useEffect(() => {
+    const slug = name || '';
+    setValue(
+      'slug',
+      encodeURIComponent(
+        slug.replaceAll('&', 'and').replaceAll(' ', '-').toLowerCase()
+      )
+    );
+  }, [name, setValue]);
 
   return (
     <Dialog open={open} onClose={onClose} maxWidth='sm' fullWidth>
@@ -46,7 +58,6 @@ const AddCategoryDialog: React.FC<Props> = ({
                 label='Name'
                 fullWidth
                 autoFocus
-                autoComplete='name'
                 name='name'
                 aria-invalid={errors.name ? 'true' : 'false'}
                 variant='outlined'
@@ -72,7 +83,6 @@ const AddCategoryDialog: React.FC<Props> = ({
                 id='slug'
                 label='Slug'
                 fullWidth
-                autoComplete='slug'
                 name='slug'
                 aria-invalid={errors.slug ? 'true' : 'false'}
                 variant='outlined'
