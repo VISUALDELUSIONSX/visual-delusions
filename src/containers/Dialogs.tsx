@@ -1,9 +1,11 @@
-import AddCategoryDialogContainer from './AddCategoryDialogContainer';
+import CategoryAddDialogContainer from './CategoryAddDialogContainer';
+import CategoryDeleteDialogContainer from './CategoryDeleteDialogContainer';
 
 const Dialogs = () => {
   return (
     <>
-      <AddCategoryDialogContainer />
+      <CategoryAddDialogContainer />
+      <CategoryDeleteDialogContainer />
     </>
   );
 };

@@ -1,4 +1,5 @@
 import {
+  Button,
   Card,
   CardContent,
   Grid,
@@ -7,6 +8,8 @@ import {
 } from '@material-ui/core';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
+import noImage from '../images/no-image.png';
+import { theme } from '../theme';
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -23,12 +26,21 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 interface Props {
-  src: string;
-  title: string;
+  src?: string;
+  name: string;
   href: string;
+  isEditable?: boolean;
+  onEdit?: () => any;
+  onDelete?: () => any;
 }
-
-const Category: React.FC<Props> = ({ src, title, href }) => {
+const Category: React.FC<Props> = ({
+  src = noImage,
+  name,
+  href,
+  isEditable,
+  onEdit,
+  onDelete,
+}) => {
   const classes = useStyles();
   const history = useHistory();
 
@@ -41,7 +53,7 @@ const Category: React.FC<Props> = ({ src, title, href }) => {
       <img
         style={{ width: '100%', height: '300px', objectFit: 'cover' }}
         src={src}
-        alt={title}
+        alt={name}
       />
       <CardContent>
         <Grid
@@ -53,9 +65,45 @@ const Category: React.FC<Props> = ({ src, title, href }) => {
         >
           <Grid item>
             <Typography variant='h4' component='h3' align='center'>
-              {title}
+              {name}
             </Typography>
           </Grid>
+
+          {isEditable && (onEdit || onDelete) && (
+            <Grid item container spacing={2} justifyContent='center'>
+              {onEdit && (
+                <Grid item>
+                  <Button
+                    variant='contained'
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      onEdit();
+                    }}
+                  >
+                    Edit
+                  </Button>
+                </Grid>
+              )}
+
+              {onDelete && (
+                <Grid item>
+                  <Button
+                    variant='contained'
+                    style={{
+                      background: theme.palette.error.main,
+                      color: 'white',
+                    }}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      onDelete();
+                    }}
+                  >
+                    Delete
+                  </Button>
+                </Grid>
+              )}
+            </Grid>
+          )}
         </Grid>
       </CardContent>
     </Card>

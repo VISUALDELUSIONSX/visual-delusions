@@ -1,20 +1,21 @@
 import { useState } from 'react';
-import AddCategoryDialog from '../components/AddCategoryDialog';
+import CategoryAddDialog from '../components/CategoryAddDialog';
 import { useAppDispatch } from '../hooks/useAppDispatch';
 import { useAppSelector } from '../hooks/useAppSelector';
 import { db, storage } from '../services/firebase';
-import { setIsAddCategoryDialogOpen } from '../store/simpleValuesSlice';
+import { setIsCategoryAddDialogOpen } from '../store/simpleValuesSlice';
+import { replaceUndefinedValues } from '../utils';
 
-const AddCategoryDialogContainer = () => {
+const CategoryAddDialogContainer = () => {
   const open = useAppSelector(
-    (state) => state.simpleValues.isAddCategoryDialogOpen
+    (state) => state.simpleValues.isCategoryAddDialogOpen
   );
   const dispatch = useAppDispatch();
-  const handleClose = () => dispatch(setIsAddCategoryDialogOpen(false));
+  const handleClose = () => dispatch(setIsCategoryAddDialogOpen(false));
   const [loading, setLoading] = useState(false);
 
   return (
-    <AddCategoryDialog
+    <CategoryAddDialog
       open={open}
       onClose={handleClose}
       loading={loading}
@@ -30,7 +31,7 @@ const AddCategoryDialogContainer = () => {
           category.img = src;
         }
         db.collection('categories')
-          .add(category)
+          .add(replaceUndefinedValues(category))
           .then(() => {
             setLoading(false);
             handleClose();
@@ -44,4 +45,4 @@ const AddCategoryDialogContainer = () => {
   );
 };
 
-export default AddCategoryDialogContainer;
+export default CategoryAddDialogContainer;

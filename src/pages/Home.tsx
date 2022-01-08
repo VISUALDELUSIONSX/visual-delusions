@@ -14,14 +14,17 @@ import Bar from '../components/Bar';
 import Category from '../components/Category';
 import NeonButton from '../components/NeonButton';
 import NeonTypography from '../components/NeonTypography';
-import lighter from '../images/lighter.jpg';
-import hoodie from '../images/hoodie.jpg';
-import canvas from '../images/canvas.jpg';
-import jewellery from '../images/jewellery.jpg';
 import { useAppSelector } from '../hooks/useAppSelector';
 import { useAppDispatch } from '../hooks/useAppDispatch';
-import { setIsAddCategoryDialogOpen } from '../store/simpleValuesSlice';
+import {
+  setIsCategoryAddDialogOpen,
+  setIsCategoryDeleteDialogOpen,
+} from '../store/simpleValuesSlice';
 import { useHistory } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { db } from '../services/firebase';
+import { Category as CategoryType, DBCategory } from '../types/client';
+import CategoryLoading from '../components/CategoryLoading';
 // import { useForm } from 'react-hook-form';
 
 const useStyles = makeStyles((theme) => ({
@@ -48,6 +51,9 @@ const Home = () => {
   const dispatch = useAppDispatch();
   const history = useHistory();
   const isAdmin = useAppSelector((state) => state.auth.user?.isAdmin);
+  const [categories, setCategories] = useState<CategoryType[]>([]);
+  const [categoriesLoading, setCategoriesLoading] = useState(true);
+
   // const [loadingContactMessage, setLoadingContactMessage] = useState(false);
   // const {
   //   register,
@@ -56,6 +62,23 @@ const Home = () => {
   // } = useForm<ContactFormDetails>();
 
   // const onSubmitContactForm = (data: ContactFormDetails) => {};
+
+  useEffect(() => {
+    const categoriesUnsubscribe = db
+      .collection('categories')
+      .onSnapshot((snap) => {
+        const categories = snap.docs.map((doc) => ({
+          ...(doc.data() as DBCategory),
+          id: doc.id,
+        }));
+        setCategories(categories);
+        setCategoriesLoading(false);
+      });
+
+    return () => {
+      categoriesUnsubscribe();
+    };
+  }, []);
 
   return (
     <>
@@ -106,7 +129,7 @@ const Home = () => {
 
           {isAdmin && (
             <Button
-              onClick={() => dispatch(setIsAddCategoryDialogOpen(true))}
+              onClick={() => dispatch(setIsCategoryAddDialogOpen(true))}
               variant='contained'
               style={{ marginBottom: '1rem' }}
             >
@@ -120,34 +143,30 @@ const Home = () => {
           />
 
           <Grid container spacing={6}>
-            <Grid item xs={12} sm={6} lg={3}>
-              <Category
-                src={canvas}
-                title='Canvases & Paintings'
-                href='/shop/canvases'
-              />
-            </Grid>
-            <Grid item xs={12} sm={6} lg={3}>
-              <Category
-                src={hoodie}
-                title='Hoodies & Sweatshirts'
-                href='/shop/hoodies'
-              />
-            </Grid>
-            <Grid item xs={12} sm={6} lg={3}>
-              <Category
-                src={lighter}
-                title='Lighters & Accessories'
-                href='/shop/accessories'
-              />
-            </Grid>
-            <Grid item xs={12} sm={6} lg={3}>
-              <Category
-                src={jewellery}
-                title='Jewellery'
-                href='/shop/jewellery'
-              />
-            </Grid>
+            {categoriesLoading
+              ? new Array(4).fill(0).map(() => (
+                  <Grid item xs={12} sm={6} lg={3}>
+                    <CategoryLoading />
+                  </Grid>
+                ))
+              : categories.map((category) => (
+                  <Grid item xs={12} sm={6} lg={3}>
+                    <Category
+                      src={category.src}
+                      name={category.name}
+                      href={`/category/${category.slug}`}
+                      isEditable={isAdmin}
+                      onDelete={() =>
+                        dispatch(
+                          setIsCategoryDeleteDialogOpen({
+                            name: category.name,
+                            id: category.id,
+                          })
+                        )
+                      }
+                    />
+                  </Grid>
+                ))}
           </Grid>
         </Container>
       </section>

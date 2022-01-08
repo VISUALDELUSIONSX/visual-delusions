@@ -1,23 +1,29 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 interface SimpleValuesState {
-  isAddCategoryDialogOpen: boolean;
+  isCategoryAddDialogOpen: boolean;
+  isCategoryDeleteDialogOpen: false | { id: string; name: string };
 }
 
 const initialState: SimpleValuesState = {
-  isAddCategoryDialogOpen: false,
+  isCategoryAddDialogOpen: false,
+  isCategoryDeleteDialogOpen: false,
 };
 
 export const simpleValuesSlice = createSlice({
   name: 'simpleValues',
   initialState,
   reducers: {
-    setIsAddCategoryDialogOpen: (state, action) => {
-      state.isAddCategoryDialogOpen = action.payload;
+    setIsCategoryAddDialogOpen: (state, action) => {
+      state.isCategoryAddDialogOpen = action.payload;
+    },
+    setIsCategoryDeleteDialogOpen: (state, action) => {
+      state.isCategoryDeleteDialogOpen = action.payload;
     },
   },
 });
 
-export const { setIsAddCategoryDialogOpen } = simpleValuesSlice.actions;
+export const { setIsCategoryAddDialogOpen, setIsCategoryDeleteDialogOpen } =
+  simpleValuesSlice.actions;
 
 export default simpleValuesSlice.reducer;

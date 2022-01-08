@@ -19,7 +19,7 @@ interface FormDetails {
 interface FormDetailsWithImage extends FormDetails {
   img?: FileWithId;
 }
-const AddCategoryDialog: React.FC<Props> = ({
+const CategoryAddDialog: React.FC<Props> = ({
   open,
   onClose,
   onSubmit,
@@ -123,4 +123,4 @@ const AddCategoryDialog: React.FC<Props> = ({
   );
 };
 
-export default AddCategoryDialog;
+export default CategoryAddDialog;
