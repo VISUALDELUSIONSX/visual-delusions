@@ -160,6 +160,7 @@ const Home = () => {
                           setIsCategoryDeleteDialogOpen({
                             name: category.name,
                             id: category.id,
+                            imgId: category.image?.id,
                           })
                         )
                       }

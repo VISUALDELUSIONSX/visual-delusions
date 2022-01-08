@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import CategoryDeleteDialog from '../components/CategoryDeleteDialog';
 import { useAppDispatch } from '../hooks/useAppDispatch';
 import { useAppSelector } from '../hooks/useAppSelector';
-import { db } from '../services/firebase';
+import { db, storage } from '../services/firebase';
 import { setIsCategoryDeleteDialogOpen } from '../store/simpleValuesSlice';
 
 const CategoryDeleteDialogContainer = () => {
@@ -14,7 +14,11 @@ const CategoryDeleteDialogContainer = () => {
   const handleClose = () => dispatch(setIsCategoryDeleteDialogOpen(false));
   const handleSubmit = async () => {
     setLoading(true);
-    open && (await db.doc(`categories/${open.id}`).delete());
+    open &&
+      (await Promise.all([
+        db.doc(`categories/${open.id}`).delete(),
+        open.imgId && storage.ref(`categories/${open.imgId}`).delete(),
+      ]));
     setLoading(false);
     handleClose();
   };

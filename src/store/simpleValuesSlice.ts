@@ -3,7 +3,9 @@ import { Category } from '../types/client';
 
 interface SimpleValuesState {
   isCategoryAddDialogOpen: boolean | Category;
-  isCategoryDeleteDialogOpen: false | { id: string; name: string };
+  isCategoryDeleteDialogOpen:
+    | false
+    | { id: string; name: string; imgId?: string };
 }
 
 const initialState: SimpleValuesState = {
