@@ -14,32 +14,41 @@ import PrivateRoute from './components/PrivateRoute';
 import Dialogs from './containers/Dialogs';
 import Shop from './pages/Shop';
 import ScrollToTop from './components/ScrollToTop';
+import { FirestoreTextEditorProvider } from 'firestore-text-editor';
+import About from './pages/About';
+import FAQ from './pages/FAQ';
+import Contact from './pages/Contact';
 
 function App() {
   return (
     <Router>
       <Provider store={store}>
-        <ReactReduxFirebaseAuthProvider
-          store={store}
-          app={app}
-          config={reactReduxFirebaseAuthConfig}
-        >
-          <ThemeProvider theme={theme}>
-            <CssBaseline />
-            <Dialogs />
-            <Header />
-            <main>
-              <ScrollToTop />
-              <Switch>
-                <Route exact path='/' component={Home} />
-                <Route exact path='/login' component={Login} />
-                <Route exact path='/shop' component={Shop} />
-                <Route exact path='/shop/:category' component={Shop} />
-                <PrivateRoute exact path='/admin' component={Admin} />
-              </Switch>
-            </main>
-          </ThemeProvider>
-        </ReactReduxFirebaseAuthProvider>
+        <FirestoreTextEditorProvider app={app}>
+          <ReactReduxFirebaseAuthProvider
+            store={store}
+            app={app}
+            config={reactReduxFirebaseAuthConfig}
+          >
+            <ThemeProvider theme={theme}>
+              <CssBaseline />
+              <Dialogs />
+              <Header />
+              <main>
+                <ScrollToTop />
+                <Switch>
+                  <Route exact path='/' component={Home} />
+                  <Route exact path='/login' component={Login} />
+                  <Route exact path='/about' component={About} />
+                  <Route exact path='/faq' component={FAQ} />
+                  <Route exact path='/contact' component={Contact} />
+                  <Route exact path='/shop' component={Shop} />
+                  <Route exact path='/shop/:category' component={Shop} />
+                  <PrivateRoute exact path='/admin' component={Admin} />
+                </Switch>
+              </main>
+            </ThemeProvider>
+          </ReactReduxFirebaseAuthProvider>
+        </FirestoreTextEditorProvider>
       </Provider>
     </Router>
   );
