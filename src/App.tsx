@@ -12,6 +12,8 @@ import reactReduxFirebaseAuthConfig from './reactReduxFirebaseAuthConfig';
 import { Provider } from 'react-redux';
 import PrivateRoute from './components/PrivateRoute';
 import Dialogs from './containers/Dialogs';
+import Shop from './pages/Shop';
+import ScrollToTop from './components/ScrollToTop';
 
 function App() {
   return (
@@ -27,9 +29,12 @@ function App() {
             <Dialogs />
             <Header />
             <main>
+              <ScrollToTop />
               <Switch>
                 <Route exact path='/' component={Home} />
                 <Route exact path='/login' component={Login} />
+                <Route exact path='/shop' component={Shop} />
+                <Route exact path='/shop/:category' component={Shop} />
                 <PrivateRoute exact path='/admin' component={Admin} />
               </Switch>
             </main>
