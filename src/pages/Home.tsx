@@ -21,6 +21,7 @@ import jewellery from '../images/jewellery.jpg';
 import { useAppSelector } from '../hooks/useAppSelector';
 import { useAppDispatch } from '../hooks/useAppDispatch';
 import { setIsAddCategoryDialogOpen } from '../store/simpleValuesSlice';
+import { useHistory } from 'react-router-dom';
 // import { useForm } from 'react-hook-form';
 
 const useStyles = makeStyles((theme) => ({
@@ -45,7 +46,7 @@ const useStyles = makeStyles((theme) => ({
 const Home = () => {
   const classes = useStyles();
   const dispatch = useAppDispatch();
-  // @ts-ignore
+  const history = useHistory();
   const isAdmin = useAppSelector((state) => state.auth.user?.isAdmin);
   // const [loadingContactMessage, setLoadingContactMessage] = useState(false);
   // const {
@@ -80,7 +81,11 @@ const Home = () => {
             </Grid>
 
             <Grid item>
-              <NeonButton variant='outlined' color='primary'>
+              <NeonButton
+                variant='outlined'
+                color='primary'
+                onClick={() => history.push('/shop')}
+              >
                 Shop Now
               </NeonButton>
             </Grid>
