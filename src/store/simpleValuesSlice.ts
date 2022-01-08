@@ -1,7 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { Category } from '../types/client';
 
 interface SimpleValuesState {
-  isCategoryAddDialogOpen: boolean;
+  isCategoryAddDialogOpen: boolean | Category;
   isCategoryDeleteDialogOpen: false | { id: string; name: string };
 }
 

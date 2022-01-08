@@ -25,7 +25,7 @@ export interface ShopItem extends DBShopItem {
 }
 
 export interface DBCategory {
-  src?: string;
+  image?: { src: string; id: string } | null;
   name: string;
   slug: string;
 }

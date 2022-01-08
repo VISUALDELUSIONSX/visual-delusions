@@ -4,7 +4,7 @@ import { useAppDispatch } from '../hooks/useAppDispatch';
 import { useAppSelector } from '../hooks/useAppSelector';
 import { db, storage } from '../services/firebase';
 import { setIsCategoryAddDialogOpen } from '../store/simpleValuesSlice';
-import { replaceUndefinedValues } from '../utils';
+import { DBCategory } from '../types/client';
 
 const CategoryAddDialogContainer = () => {
   const open = useAppSelector(
@@ -21,17 +21,28 @@ const CategoryAddDialogContainer = () => {
       loading={loading}
       onSubmit={async (data) => {
         setLoading(true);
-        console.log(data);
-        const category = { ...data };
-        if (data.img) {
+        const category: DBCategory = {
+          name: data.name,
+          slug: data.slug,
+          image: null,
+        };
+        if (data.img && !('src' in data.img)) {
           const snap = await storage
             .ref(`categories/${data.img.id}`)
             .put(data.img);
           const src = await snap.ref.getDownloadURL();
-          category.img = src;
+          category.image = { src, id: data.img.id };
+        } else {
+          !data.img &&
+            typeof open === 'object' &&
+            open.image &&
+            (await storage.ref(`categories/${open.image.id}`).delete());
+          category.image = data.img || null;
         }
-        db.collection('categories')
-          .add(replaceUndefinedValues(category))
+        (typeof open === 'object'
+          ? db.doc(`categories/${open.id}`).update(category)
+          : db.collection('categories').add(category)
+        )
           .then(() => {
             setLoading(false);
             handleClose();

@@ -53,7 +53,6 @@ const Home = () => {
   const isAdmin = useAppSelector((state) => state.auth.user?.isAdmin);
   const [categories, setCategories] = useState<CategoryType[]>([]);
   const [categoriesLoading, setCategoriesLoading] = useState(true);
-
   // const [loadingContactMessage, setLoadingContactMessage] = useState(false);
   // const {
   //   register,
@@ -144,15 +143,15 @@ const Home = () => {
 
           <Grid container spacing={6}>
             {categoriesLoading
-              ? new Array(4).fill(0).map(() => (
-                  <Grid item xs={12} sm={6} lg={3}>
+              ? new Array(4).fill(0).map((_, i) => (
+                  <Grid key={i} item xs={12} sm={6} lg={3}>
                     <CategoryLoading />
                   </Grid>
                 ))
               : categories.map((category) => (
-                  <Grid item xs={12} sm={6} lg={3}>
+                  <Grid key={category.slug} item xs={12} sm={6} lg={3}>
                     <Category
-                      src={category.src}
+                      src={category.image?.src}
                       name={category.name}
                       href={`/category/${category.slug}`}
                       isEditable={isAdmin}
@@ -163,6 +162,9 @@ const Home = () => {
                             id: category.id,
                           })
                         )
+                      }
+                      onEdit={() =>
+                        dispatch(setIsCategoryAddDialogOpen(category))
                       }
                     />
                   </Grid>

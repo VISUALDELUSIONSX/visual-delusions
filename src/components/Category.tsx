@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 interface Props {
-  src?: string;
+  src?: string | null;
   name: string;
   href: string;
   isEditable?: boolean;
@@ -34,7 +34,7 @@ interface Props {
   onDelete?: () => any;
 }
 const Category: React.FC<Props> = ({
-  src = noImage,
+  src,
   name,
   href,
   isEditable,
@@ -52,7 +52,7 @@ const Category: React.FC<Props> = ({
     >
       <img
         style={{ width: '100%', height: '300px', objectFit: 'cover' }}
-        src={src}
+        src={src || noImage}
         alt={name}
       />
       <CardContent>

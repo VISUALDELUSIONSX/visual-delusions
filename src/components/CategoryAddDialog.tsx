@@ -1,11 +1,11 @@
 import { Button, Dialog, Grid, TextField, Typography } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { FileWithId } from '../types/client';
+import { Category, FileWithId } from '../types/client';
 import ImageDropzone from './ImageDropzone';
 
 interface Props {
-  open: boolean;
+  open: boolean | Category;
   onClose: () => any;
   onSubmit: (data: FormDetailsWithImage) => any;
   loading: boolean;
@@ -17,7 +17,7 @@ interface FormDetails {
 }
 
 interface FormDetailsWithImage extends FormDetails {
-  img?: FileWithId;
+  img?: FileWithId | { id: string; src: string };
 }
 const CategoryAddDialog: React.FC<Props> = ({
   open,
@@ -27,7 +27,7 @@ const CategoryAddDialog: React.FC<Props> = ({
 }) => {
   const { register, handleSubmit, errors, setValue, watch } =
     useForm<FormDetails>();
-  const [img, setImg] = useState<FileWithId>();
+  const [img, setImg] = useState<FileWithId | { id: string; src: string }>();
   const name = watch('name');
 
   useEffect(() => {
@@ -40,8 +40,12 @@ const CategoryAddDialog: React.FC<Props> = ({
     );
   }, [name, setValue]);
 
+  useEffect(() => {
+    setImg((typeof open === 'object' && open.image) || undefined);
+  }, [open]);
+
   return (
-    <Dialog open={open} onClose={onClose} maxWidth='sm' fullWidth>
+    <Dialog open={!!open} onClose={onClose} maxWidth='sm' fullWidth>
       <div style={{ padding: '2rem' }}>
         <Typography variant='h4' gutterBottom align='center'>
           Add Category
@@ -54,6 +58,7 @@ const CategoryAddDialog: React.FC<Props> = ({
             <Grid item style={{ width: '100%' }}>
               <TextField
                 inputRef={register({ required: 'Name is required' })}
+                defaultValue={typeof open === 'object' ? open.name : ''}
                 id='name'
                 label='Name'
                 fullWidth
@@ -80,6 +85,7 @@ const CategoryAddDialog: React.FC<Props> = ({
             <Grid item>
               <TextField
                 inputRef={register({ required: 'Slug is required' })}
+                defaultValue={typeof open === 'object' ? open.slug : ''}
                 id='slug'
                 label='Slug'
                 fullWidth
@@ -103,7 +109,16 @@ const CategoryAddDialog: React.FC<Props> = ({
             </Grid>
 
             <Grid item>
-              <ImageDropzone singleImage onDrop={(files) => setImg(files[0])} />
+              {img && 'src' in img ? (
+                <Button variant='contained' onClick={() => setImg(undefined)}>
+                  Change Photo
+                </Button>
+              ) : (
+                <ImageDropzone
+                  singleImage
+                  onDrop={(files) => setImg(files[0])}
+                />
+              )}
             </Grid>
 
             <Grid item style={{ alignSelf: 'center' }}>
