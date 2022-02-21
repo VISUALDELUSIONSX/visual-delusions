@@ -39,7 +39,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     transform: 'translateY(-100%)',
   },
   title: {
-    flexGrow: 1,
+    textDecoration: 'none',
   },
   drawer: {
     width: drawerWidth,
@@ -82,7 +82,7 @@ const Header = () => {
 
     /* Puts main into view from under header */
     const main = document.querySelector('main')!;
-    const headerHeight = header.getBoundingClientRect().height + 16 + 'px';
+    const headerHeight = header.getBoundingClientRect().height + 'px';
     main.style.paddingTop = headerHeight;
 
     //eslint-disable-next-line
@@ -101,39 +101,42 @@ const Header = () => {
             color='secondary'
             variant='h4'
             className={classes.title}
+            component={Link}
+            to='/'
           >
             Visual Delusions
           </NeonTypography>
 
-          {mdUp ? (
-            <>
-              {menuItems.map((item) => (
-                <Button
-                  component={Link}
-                  to={item.href}
-                  color='inherit'
-                  style={{ marginLeft: '0.5rem' }}
-                  size='large'
-                  key={item.href}
-                >
-                  {item.label}
-                </Button>
-              ))}
-              {loaded && user && (
-                <Button
-                  onClick={signOut}
-                  style={{
-                    marginLeft: '0.5rem',
-                    background: 'darkred',
-                    color: 'white',
-                  }}
-                  size='large'
-                  variant='contained'
-                >
-                  Logout
-                </Button>
-              )}
-              {/* <Button
+          <div style={{ marginLeft: 'auto' }}>
+            {mdUp ? (
+              <>
+                {menuItems.map((item) => (
+                  <Button
+                    component={Link}
+                    to={item.href}
+                    color='inherit'
+                    style={{ marginLeft: '0.5rem' }}
+                    size='large'
+                    key={item.href}
+                  >
+                    {item.label}
+                  </Button>
+                ))}
+                {loaded && user && (
+                  <Button
+                    onClick={signOut}
+                    style={{
+                      marginLeft: '0.5rem',
+                      background: 'darkred',
+                      color: 'white',
+                    }}
+                    size='large'
+                    variant='contained'
+                  >
+                    Logout
+                  </Button>
+                )}
+                {/* <Button
                 onClick={() => dispatch(displaySignInDialog())}
                 color='inherit'
                 style={{ marginLeft: '0.5rem' }}
@@ -141,12 +144,13 @@ const Header = () => {
               >
                 Login
               </Button> */}
-            </>
-          ) : (
-            <IconButton onClick={handleDrawerToggle} color='inherit'>
-              <MenuIcon />
-            </IconButton>
-          )}
+              </>
+            ) : (
+              <IconButton onClick={handleDrawerToggle} color='inherit'>
+                <MenuIcon />
+              </IconButton>
+            )}
+          </div>
         </Toolbar>
       </AppBar>
 

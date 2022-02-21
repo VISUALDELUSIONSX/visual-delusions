@@ -26,6 +26,7 @@ import { db } from '../services/firebase';
 import { Category as CategoryType, DBCategory } from '../types/client';
 import CategoryLoading from '../components/CategoryLoading';
 // import { useForm } from 'react-hook-form';
+import hero from '../images/hero.jpg';
 
 const useStyles = makeStyles((theme) => ({
   section: {
@@ -81,7 +82,14 @@ const Home = () => {
 
   return (
     <>
-      <section className={classes.section}>
+      <section
+        className={classes.section}
+        style={{
+          backgroundImage: `url(${hero})`,
+          backgroundPosition: 'center',
+          backgroundSize: 'cover',
+        }}
+      >
         <Container>
           <Grid
             container
