@@ -30,10 +30,12 @@ const useStyles = makeStyles(() => ({
 
 interface Props {
   categories: { value: string; label: string }[];
+  defaultCategory?: string;
 }
 
-const ShopFilter: React.FC<Props> = ({ categories }) => {
+const ShopFilter: React.FC<Props> = ({ categories, defaultCategory }) => {
   const [priceRange, setPriceRange] = useState([0, 200]);
+  const [category, setCategory] = useState(defaultCategory || '');
   const classes = useStyles();
 
   return (
@@ -68,7 +70,8 @@ const ShopFilter: React.FC<Props> = ({ categories }) => {
               />
               <RadioGroup
                 aria-label='category'
-                defaultValue=''
+                value={category}
+                onChange={(e) => setCategory(e.target.value)}
                 name='radio-buttons-group'
               >
                 <FormControlLabel
