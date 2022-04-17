@@ -26,13 +26,15 @@ export default function NeonTypography<C extends React.ElementType>(
   const shadowSize = parseInt(size + 'rem' || '1rem') / 5 + 'rem';
   return (
     <Typography
+      {...rest}
       style={{
         ...props.style,
         textShadow: `0 0 calc(${shadowSize} / 4) #fff, 0 0 calc(${shadowSize} / 4) #fff, 0 0 ${shadowSize} ${color}, 0 0 ${shadowSize} ${color}, 0 0 calc(${shadowSize} * 1.5) ${color}, 0 0 ${shadowSize} ${color}, 0 0 ${shadowSize} ${color}`,
         letterSpacing: '1.5px',
         color,
+        ...rest.style,
       }}
-      {...rest}
     />
   );
 }
+
