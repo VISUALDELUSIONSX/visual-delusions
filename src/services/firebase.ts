@@ -19,9 +19,14 @@ export const db = firebase.firestore(app);
 export const functions = firebase.functions(app);
 export const storage = firebase.storage(app);
 
+export type Query = firebase.firestore.Query;
+export type CollectionReference = firebase.firestore.CollectionReference;
+export type WhereFilterOp = firebase.firestore.WhereFilterOp;
+
 if (process.env.NODE_ENV === 'development') {
   auth.useEmulator('http://localhost:9099');
   db.useEmulator('localhost', 8080);
   functions.useEmulator('localhost', 5001);
   storage.useEmulator('localhost', 9199);
 }
+
