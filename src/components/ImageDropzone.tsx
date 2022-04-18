@@ -1,10 +1,19 @@
-import { Button, Fab, Grid, Tooltip } from '@material-ui/core';
+import {
+  Button,
+  Dialog,
+  Fab,
+  Grid,
+  Tooltip,
+  Typography,
+} from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
 import { makeStyles } from '@material-ui/styles';
 import React, { useEffect, useState } from 'react';
 import { DropzoneOptions, useDropzone } from 'react-dropzone';
 import { v4 as uuid } from 'uuid';
 import { FileWithId } from '../types/client';
+import imageCompression from 'browser-image-compression';
+import convert from 'heic-convert';
 import Spinner from './Spinner';
 
 const useStyles = makeStyles(() => ({
@@ -72,20 +81,46 @@ const DragDropZone: React.FC<Props> = ({
   defaultImagesLoading,
 }) => {
   const [files, setFiles] = useState<any[]>([]);
+  const [loadingOptimization, setLoadingOptimization] = useState(false);
   const classes = useStyles();
 
   const { getRootProps, getInputProps } = useDropzone({
-    accept: 'image/*',
+    accept: 'image/*, .heic',
     maxFiles: singleImage ? 1 : undefined,
-    onDrop: (acceptedFiles) => {
-      const files = acceptedFiles.map((file) =>
-        Object.assign(file, {
-          preview: URL.createObjectURL(file),
-          id: uuid(),
-        })
-      );
-      onDrop?.(files);
-      setFiles((prev) => [...(singleImage ? [] : prev), ...files]);
+    onDrop: async (acceptedFiles) => {
+      const newAcceptedFiles = [];
+      setLoadingOptimization(true);
+      for (const file of acceptedFiles) {
+        let newFile: any = file;
+        const split = file.name.split('.');
+        const fileType = split[split.length - 1].toLowerCase();
+        if (fileType === 'heic') {
+          const arrayBuffer = await file.arrayBuffer();
+          const outputBuffer: Buffer = await convert({
+            buffer: Buffer.from(arrayBuffer),
+            format: 'JPEG',
+            quality: 1,
+          });
+          newFile = new Blob([outputBuffer], {
+            type: 'image/jpeg',
+          });
+          newFile.name = 'name.jpeg';
+        }
+        const compressedFile = await imageCompression(newFile, {
+          maxSizeMB: 0.1,
+          maxWidthOrHeight: 1000,
+        });
+        newAcceptedFiles.push(
+          Object.assign(compressedFile, {
+            preview: URL.createObjectURL(compressedFile),
+            id: uuid(),
+          })
+        );
+      }
+      const newFiles = [...(singleImage ? [] : files), ...newAcceptedFiles];
+      setLoadingOptimization(false);
+      onDrop?.(newFiles);
+      setFiles(newFiles);
     },
     ...options,
   });
@@ -107,6 +142,17 @@ const DragDropZone: React.FC<Props> = ({
     <Spinner />
   ) : (
     <section className={classes.container}>
+      <Dialog maxWidth='sm' fullWidth open={loadingOptimization}>
+        <div style={{ padding: '1rem' }}>
+          <Typography variant='h4' align='center'>
+            Optimization in Progress
+          </Typography>
+          <Typography gutterBottom align='center'>
+            We are optimizing your images before uploading
+          </Typography>
+          <Spinner style={{ margin: '0 auto' }} />
+        </div>
+      </Dialog>
       <div {...getRootProps({ className: classes.dropZone })}>
         <input {...getInputProps()} />
         <p>
