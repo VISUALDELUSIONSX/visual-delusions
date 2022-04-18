@@ -1,7 +1,7 @@
 import CategoryAddDialogContainer from './CategoryAddDialogContainer';
 import CategoryDeleteDialogContainer from './CategoryDeleteDialogContainer';
 import ShopItemAddDialogContainer from './ShopItemAddDialogContainer';
-// import ShopItemDeleteDialogContainer from './ShopItemDeleteDialogContainer';
+import ShopItemDeleteDialogContainer from './ShopItemDeleteDialogContainer';
 
 const Dialogs = () => {
   return (
@@ -9,7 +9,7 @@ const Dialogs = () => {
       <CategoryAddDialogContainer />
       <CategoryDeleteDialogContainer />
       <ShopItemAddDialogContainer />
-      {/* <ShopItemDeleteDialogContainer /> */}
+      <ShopItemDeleteDialogContainer />
     </>
   );
 };

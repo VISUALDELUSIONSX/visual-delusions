@@ -9,7 +9,10 @@ import { Category, ShopItem } from '../types/client';
 import useCollection from '../hooks/useCollection';
 import { Skeleton } from '@material-ui/lab';
 import { useAppDispatch } from '../hooks/useAppDispatch';
-import { setIsShopItemAddDialogOpen } from '../store/simpleValuesSlice';
+import {
+  setIsShopItemAddDialogOpen,
+  setIsShopItemDeleteDialogOpen,
+} from '../store/simpleValuesSlice';
 
 interface MatchProps {
   category?: string;
@@ -107,7 +110,9 @@ const Shop: React.FC<Props> = ({ match }) => {
                 previewImage={item.images?.[0]?.src}
                 isAdmin={isAdmin}
                 onEditItem={() => dispatch(setIsShopItemAddDialogOpen(item))}
-                onDeleteItem={() => {}}
+                onDeleteItem={() =>
+                  dispatch(setIsShopItemDeleteDialogOpen(item))
+                }
               />
             </Grid>
           ))}

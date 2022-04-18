@@ -9,7 +9,7 @@ interface SimpleValuesState {
   isShopItemAddDialogOpen: boolean | ShopItem;
   isShopItemDeleteDialogOpen:
     | false
-    | { id: string; name: string; imgId?: string };
+    | { id: string; name: string; images?: { id: string }[] };
 }
 
 const initialState: SimpleValuesState = {
