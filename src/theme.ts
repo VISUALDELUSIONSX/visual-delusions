@@ -19,12 +19,12 @@ export const theme = unstable_createMuiStrictModeTheme({
       main: '#7E4CCB',
     },
     background: {
-      paper: '#171717',
-      default: '#111',
+      paper: '#111',
+      default: '#0a0a0a',
     },
   },
   typography: {
-    fontFamily: 'Open Sans, sans-serif',
+    fontFamily: "'Montserrat', sans-serif",
     h1: {
       fontWeight: 300,
     },
@@ -102,3 +102,4 @@ theme.overrides = {
     },
   },
 };
+

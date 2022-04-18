@@ -7,7 +7,9 @@ import {
   Typography,
 } from '@material-ui/core';
 import React from 'react';
+import { useInView } from 'react-intersection-observer';
 import { useHistory } from 'react-router-dom';
+import useAnimation from '../hooks/useAnimation';
 import noImage from '../images/no-image.png';
 import { theme } from '../theme';
 
@@ -43,12 +45,19 @@ const Category: React.FC<Props> = ({
 }) => {
   const classes = useStyles();
   const history = useHistory();
+  const [ref, , entry] = useInView();
+  const isIntersecting = entry?.isIntersecting;
+  const animation = useAnimation(['fadeIn', 'grow'], isIntersecting, {
+    transition: '300ms ease-in-out',
+  });
 
   return (
     <Card
+      ref={ref}
       className={classes.card}
       onClick={() => history.push(href)}
       role='link'
+      style={{ ...animation }}
     >
       <img
         style={{ width: '100%', height: '300px', objectFit: 'cover' }}
@@ -111,3 +120,4 @@ const Category: React.FC<Props> = ({
 };
 
 export default Category;
+

@@ -55,6 +55,30 @@ const useStyles = makeStyles((theme: Theme) => ({
     ...theme.mixins.toolbar,
     justifyContent: 'flex-end',
   },
+  button: {
+    transition: '200ms',
+    position: 'relative',
+    fontWeight: 'bold',
+
+    '&::after': {
+      content: '""',
+      height: '3px',
+      width: '100%',
+      background: theme.palette.secondary.main,
+      position: 'absolute',
+      bottom: '0',
+      left: '0',
+      transform: 'scale(0, 1)',
+      transformOrigin: 'center',
+      transition: '200ms',
+    },
+
+    '&:hover': {
+      '&::after': {
+        transform: 'scale(1, 1)',
+      },
+    },
+  },
 }));
 
 const menuItems = [
@@ -115,7 +139,8 @@ const Header = () => {
                     component={Link}
                     to={item.href}
                     color='inherit'
-                    style={{ marginLeft: '0.5rem' }}
+                    className={classes.button}
+                    style={{ marginLeft: '0.5rem', height: 70 }}
                     size='large'
                     key={item.href}
                   >
@@ -210,3 +235,4 @@ const Header = () => {
 };
 
 export default Header;
+
