@@ -5,6 +5,7 @@ import React, { useEffect, useState } from 'react';
 import { DropzoneOptions, useDropzone } from 'react-dropzone';
 import { v4 as uuid } from 'uuid';
 import { FileWithId } from '../types/client';
+import Spinner from './Spinner';
 
 const useStyles = makeStyles(() => ({
   thumbsContainer: {
@@ -54,15 +55,21 @@ interface Props {
   onUpload?: (files: any[]) => any;
   onClose?: () => any;
   onDrop?: (files: FileWithId[]) => any;
+  onFilesChange?: (files: FileWithId[]) => any;
   singleImage?: boolean;
+  defaultImages?: FileWithId[];
+  defaultImagesLoading?: boolean;
 }
 
 const DragDropZone: React.FC<Props> = ({
   options,
   onUpload,
   onClose,
+  onFilesChange,
   onDrop,
   singleImage,
+  defaultImages,
+  defaultImagesLoading,
 }) => {
   const [files, setFiles] = useState<any[]>([]);
   const classes = useStyles();
@@ -83,15 +90,22 @@ const DragDropZone: React.FC<Props> = ({
     ...options,
   });
 
-  useEffect(
-    () => () => {
+  useEffect(() => {
+    onFilesChange?.(files);
+    return () => {
       // Make sure to revoke the data uris to avoid memory leaks
       files.forEach((file) => URL.revokeObjectURL(file.preview));
-    },
-    [files]
-  );
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [files]);
 
-  return (
+  useEffect(() => {
+    defaultImages && setFiles(defaultImages);
+  }, [defaultImages]);
+
+  return defaultImagesLoading ? (
+    <Spinner />
+  ) : (
     <section className={classes.container}>
       <div {...getRootProps({ className: classes.dropZone })}>
         <input {...getInputProps()} />
