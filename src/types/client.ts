@@ -15,7 +15,7 @@ export interface DBShopItem {
   price: number;
   description?: string;
   previewImage?: string;
-  images?: [{ src: string; alt: string }];
+  images?: { src: string; alt: string; id: string }[];
   category: string;
 }
 
@@ -36,3 +36,7 @@ export interface Category extends DBCategory {
 export interface FileWithId extends File {
   id: string;
 }
+export interface FileWithIdAndSrc extends FileWithId {
+  src: string;
+}
+

@@ -5,9 +5,11 @@ import ShopItemPreview from '../components/ShopItemPreview';
 import { useAppSelector } from '../hooks/useAppSelector';
 import NeonTypography from '../components/NeonTypography';
 import NeonButton from '../components/NeonButton';
-import { Category } from '../types/client';
+import { Category, ShopItem } from '../types/client';
 import useCollection from '../hooks/useCollection';
 import { Skeleton } from '@material-ui/lab';
+import { useAppDispatch } from '../hooks/useAppDispatch';
+import { setIsShopItemAddDialogOpen } from '../store/simpleValuesSlice';
 
 interface MatchProps {
   category?: string;
@@ -18,9 +20,13 @@ interface Props extends RouteComponentProps<MatchProps> {}
 const Shop: React.FC<Props> = ({ match }) => {
   const category = match.params.category;
   const history = useHistory();
+  const dispatch = useAppDispatch();
   const isAdmin = useAppSelector((state) => state.auth.user?.isAdmin);
 
   const [categories, categoriesLoading] = useCollection<Category>('categories');
+  const [shopItems] = useCollection<ShopItem>('shop_items', {
+    where: category ? ['category', '==', category] : undefined,
+  });
 
   return (
     <div>
@@ -80,20 +86,28 @@ const Shop: React.FC<Props> = ({ match }) => {
         </Grid>
 
         {isAdmin && (
-          <Button style={{ marginBottom: '1rem' }} variant='contained'>
+          <Button
+            onClick={() => dispatch(setIsShopItemAddDialogOpen(true))}
+            style={{ marginBottom: '1rem' }}
+            variant='contained'
+          >
             Add Item
           </Button>
         )}
 
         <Grid container spacing={8}>
-          {[1, 2, 3, 4, 5, 6, 7, 8, 9, 19].map((item, i) => (
+          {shopItems.map((item, i) => (
             <Grid item xs={12} sm={6} md={4} lg={3} key={i}>
               <ShopItemPreview
-                name='Test Item'
-                price={20}
-                category='lighters'
-                id='1'
+                name={item.name}
+                price={item.price}
+                category={item.category}
+                id={item.id}
                 i={i}
+                previewImage={item.images?.[0]?.src}
+                isAdmin={isAdmin}
+                onEditItem={() => dispatch(setIsShopItemAddDialogOpen(item))}
+                onDeleteItem={() => {}}
               />
             </Grid>
           ))}

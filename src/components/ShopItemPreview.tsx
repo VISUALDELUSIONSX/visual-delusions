@@ -1,5 +1,6 @@
 import {
   alpha,
+  Button,
   Card,
   CardContent,
   Grid,
@@ -28,13 +29,22 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ShopItemPreview: React.FC<ShopItem> = ({
+interface Props extends ShopItem {
+  isAdmin?: boolean;
+  onEditItem: () => any;
+  onDeleteItem: () => any;
+}
+
+const ShopItemPreview: React.FC<Props> = ({
   name,
   price,
   previewImage,
   category,
   id,
   i = 0,
+  isAdmin,
+  onEditItem,
+  onDeleteItem,
 }) => {
   const history = useHistory();
   const classes = useStyles();
@@ -102,6 +112,37 @@ const ShopItemPreview: React.FC<ShopItem> = ({
               {formatPrice(price || 0)}
             </Typography>
           </Grid>
+
+          {isAdmin && (
+            <>
+              <Grid item>
+                <Button
+                  variant='contained'
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onEditItem();
+                  }}
+                >
+                  Edit Item
+                </Button>
+              </Grid>
+              <Grid item>
+                <Button
+                  variant='contained'
+                  style={{
+                    background: theme.palette.error.main,
+                    color: 'white',
+                  }}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onDeleteItem();
+                  }}
+                >
+                  Delete Item
+                </Button>
+              </Grid>
+            </>
+          )}
         </Grid>
       </CardContent>
     </Card>
