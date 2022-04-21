@@ -6,12 +6,30 @@ import {
   TextField,
   Typography,
 } from '@material-ui/core';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Category, FileWithId, ShopItem } from '../types/client';
 import FormError from './FormError';
 import ImageDropzone from './ImageDropzone';
 import ReactHookFormSelect from './ReactHookFormSelect';
+import { Editor } from 'react-draft-wysiwyg';
+import { convertFromRaw, convertToRaw, EditorState } from 'draft-js';
+import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+import { theme } from '../theme';
+import { makeStyles } from '@material-ui/styles';
+
+const useStyles = makeStyles(() => ({
+  editor: {
+    border: '1px solid #444',
+    borderRadius: 4,
+    padding: '0 12px',
+
+    '&:hover': {
+      borderRadius: 2,
+      borderColor: 'white',
+    },
+  },
+}));
 
 interface Props {
   open: boolean | ShopItem;
@@ -41,12 +59,24 @@ const ShopItemAddDialog: React.FC<Props> = ({
   defaultImages,
   defaultImagesLoading,
 }) => {
+  const classes = useStyles();
+  const [editorState, setEditorState] = useState(EditorState.createEmpty());
   const { register, handleSubmit, errors, setValue, control } =
     useForm<FormDetails>();
 
   useEffect(() => {
     register('images');
   }, [register]);
+
+  const description = typeof open === 'object' && open.description;
+
+  useEffect(() => {
+    setEditorState(
+      description
+        ? EditorState.createWithContent(convertFromRaw(JSON.parse(description)))
+        : EditorState.createEmpty()
+    );
+  }, [description]);
 
   return (
     <Dialog open={!!open} onClose={onClose} maxWidth='sm' fullWidth>
@@ -55,7 +85,17 @@ const ShopItemAddDialog: React.FC<Props> = ({
           Add Shop Item
         </Typography>
 
-        <form aria-label='shop item form' onSubmit={handleSubmit(onSubmit)}>
+        <form
+          aria-label='shop item form'
+          onSubmit={handleSubmit((data) =>
+            onSubmit({
+              ...data,
+              description: JSON.stringify(
+                convertToRaw(editorState.getCurrentContent())
+              ),
+            })
+          )}
+        >
           <Grid container direction='column' spacing={3}>
             <Grid item>
               <TextField
@@ -90,22 +130,17 @@ const ShopItemAddDialog: React.FC<Props> = ({
             </Grid>
 
             <Grid item>
-              <TextField
-                inputRef={register({ required: 'Description is required' })}
-                defaultValue={typeof open === 'object' ? open.description : ''}
-                id='description'
-                label='Description'
-                fullWidth
-                name='description'
-                aria-invalid={errors.description ? 'true' : 'false'}
-                variant='outlined'
-                multiline
-                minRows={3}
+              <Editor
+                editorState={editorState}
+                onEditorStateChange={setEditorState}
+                toolbarStyle={{
+                  background: theme.palette.background.paper,
+                  border: 'none',
+                  color: 'black',
+                }}
+                placeholder='Description'
+                editorClassName={classes.editor}
               />
-
-              {errors.description && (
-                <FormError>{errors.description.message}</FormError>
-              )}
             </Grid>
 
             <Grid item>
