@@ -1,4 +1,4 @@
-type AnimationType = 'slideRight' | 'slideLeft' | 'fadeIn' | 'grow';
+export type AnimationType = 'slideRight' | 'slideLeft' | 'fadeIn' | 'grow';
 
 const useAnimation = (
   type: AnimationType | AnimationType[],
