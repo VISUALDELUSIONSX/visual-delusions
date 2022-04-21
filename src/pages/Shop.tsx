@@ -13,6 +13,7 @@ import {
   setIsShopItemAddDialogOpen,
   setIsShopItemDeleteDialogOpen,
 } from '../store/simpleValuesSlice';
+import ShopItemLoading from '../components/ShopItemLoading';
 
 interface MatchProps {
   category?: string;
@@ -27,7 +28,7 @@ const Shop: React.FC<Props> = ({ match }) => {
   const isAdmin = useAppSelector((state) => state.auth.user?.isAdmin);
 
   const [categories, categoriesLoading] = useCollection<Category>('categories');
-  const [shopItems] = useCollection<ShopItem>('shop_items', {
+  const [shopItems, shopItemsLoading] = useCollection<ShopItem>('shop_items', {
     where: category ? ['category', '==', category] : undefined,
   });
 
@@ -35,11 +36,16 @@ const Shop: React.FC<Props> = ({ match }) => {
     <div>
       <Container maxWidth='lg'>
         <NeonTypography
+          animation='fadeIn'
           component='h1'
           variant='h2'
           color='primary'
           align='center'
-          style={{ marginBottom: '2rem', marginTop: '3rem' }}
+          style={{
+            marginBottom: '2rem',
+            marginTop: '3rem',
+            fontWeight: 'bold',
+          }}
         >
           OUR SELECTION
         </NeonTypography>
@@ -99,6 +105,15 @@ const Shop: React.FC<Props> = ({ match }) => {
         )}
 
         <Grid container spacing={8}>
+          {shopItemsLoading &&
+            Array(8)
+              .fill(null)
+              .map((_, i) => (
+                <Grid item xs={12} sm={6} md={4} lg={3}>
+                  <ShopItemLoading i={i} />
+                </Grid>
+              ))}
+
           {shopItems.map((item, i) => (
             <Grid item xs={12} sm={6} md={4} lg={3} key={i}>
               <ShopItemPreview

@@ -13,6 +13,7 @@ const useCollection = <T>(path: string, options?: UseCollectionOptions) => {
   const [unsubscribe, setUnsubscribe] = useState<() => void>();
 
   useEffect(() => {
+    setLoading(true);
     setData([]);
     setError('');
     unsubscribe?.();
