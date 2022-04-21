@@ -19,6 +19,7 @@ const ShopItemAddDialogContainer = () => {
   const [categories] = useCollection<Category>('categories');
   const [imageFiles, setImageFiles] = useState<FileWithIdAndSrc[]>([]);
   const [imageFilesLoading, setImageFilesLoading] = useState(false);
+  const id = typeof open === 'object' && open.id;
 
   const getImageFiles = async () => {
     if (typeof open === 'object' && open.images?.length) {
@@ -48,13 +49,15 @@ const ShopItemAddDialogContainer = () => {
       } catch (err) {
         console.error(err);
       }
+    } else {
+      setImageFiles([]);
     }
   };
 
   useEffect(() => {
     getImageFiles();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [open]);
+  }, [id]);
 
   return (
     <ShopItemAddDialog
