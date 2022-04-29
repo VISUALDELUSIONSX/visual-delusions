@@ -25,8 +25,7 @@ const CategoryDeleteDialog: React.FC<Props> = ({
         </Typography>
 
         <Typography style={{ marginBottom: '1rem' }}>
-          Are you sure you want delete the category "{name}"? Any items
-          belonging to this category will also be deleted.
+          Are you sure you want delete the category "{name}"?
         </Typography>
 
         <Grid container spacing={2}>
