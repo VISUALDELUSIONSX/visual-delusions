@@ -6,6 +6,8 @@ import {
   makeStyles,
   Typography,
   Link as StyledLink,
+  CircularProgress,
+  Button,
 } from '@material-ui/core';
 import { convertFromRaw, EditorState } from 'draft-js';
 import React, { useEffect, useState } from 'react';
@@ -20,6 +22,12 @@ import Bar from '../components/Bar';
 import { theme } from '../theme';
 import { formatPrice } from '../utils';
 import NeonButton from '../components/NeonButton';
+import { useAppSelector } from '../hooks/useAppSelector';
+import { useAppDispatch } from '../hooks/useAppDispatch';
+import {
+  setIsShopItemAddDialogOpen,
+  setIsShopItemDeleteDialogOpen,
+} from '../store/simpleValuesSlice';
 
 const useStyles = makeStyles({
   original: {
@@ -45,6 +53,8 @@ const ShopItem: React.FC<Props> = ({ match }) => {
   const classes = useStyles();
   const id = match.params.shopItemId;
   const categorySlug = match.params.category;
+  const isAdmin = useAppSelector((state) => state.auth.user?.isAdmin);
+  const dispatch = useAppDispatch();
   const [description, setDescription] = useState(EditorState.createEmpty());
   const [shopItem, shopItemLoading] = useDoc<ShopItemType>(`shop_items/${id}`);
   const [categories, categoriesLoading] = useCollection<Category>(
@@ -67,7 +77,9 @@ const ShopItem: React.FC<Props> = ({ match }) => {
   return (
     <Container maxWidth='lg' style={{ paddingTop: '4rem' }}>
       {shopItemLoading || categoriesLoading ? (
-        <div></div>
+        <Grid container justifyContent='center'>
+          <CircularProgress color='secondary' />
+        </Grid>
       ) : (
         <Grid container spacing={4}>
           <Grid item xs={12} md={6}>
@@ -99,6 +111,36 @@ const ShopItem: React.FC<Props> = ({ match }) => {
                 padding: '2rem',
               }}
             >
+              {isAdmin && (
+                <Grid container spacing={2} style={{ marginBottom: '1rem' }}>
+                  <Grid item>
+                    <Button
+                      onClick={() =>
+                        dispatch(setIsShopItemAddDialogOpen(shopItem))
+                      }
+                      variant='contained'
+                    >
+                      Edit Item
+                    </Button>
+                  </Grid>
+
+                  <Grid item>
+                    <Button
+                      variant='contained'
+                      style={{
+                        background: theme.palette.error.main,
+                        color: 'white',
+                      }}
+                      onClick={() =>
+                        dispatch(setIsShopItemDeleteDialogOpen(shopItem))
+                      }
+                    >
+                      Delete Item
+                    </Button>
+                  </Grid>
+                </Grid>
+              )}
+
               <StyledLink
                 component={Link}
                 to={`/shop/${categorySlug}`}
@@ -136,6 +178,12 @@ const ShopItem: React.FC<Props> = ({ match }) => {
                 editorState={description}
                 editorStyle={{ margin: '-14px 0' }}
               />
+
+              {/* <FirestoreTextEditor
+                path={`shop_items/${id}`}
+                field='description'
+                editIconStyle={{ color: 'green' }}
+              /> */}
 
               <Grid
                 container
