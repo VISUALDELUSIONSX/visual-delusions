@@ -85,7 +85,6 @@ const ShopItemAddDialogContainer = () => {
         const imagesAreAdded = typeof open === 'boolean' && data.images?.length;
 
         if (imagesAreAdded) {
-          console.log('ADDED');
           const promises = [];
           for (const image of data.images || []) {
             promises.push(
@@ -107,7 +106,6 @@ const ShopItemAddDialogContainer = () => {
         }
 
         if (imagesAreEdited && typeof open === 'object') {
-          console.log('EDITED');
           const before =
             (typeof open === 'object' &&
               open.images?.map((image) => ({ id: image.id }))) ||
@@ -134,7 +132,6 @@ const ShopItemAddDialogContainer = () => {
                   if (image.id !== diffItem.id) return image;
                   return { ...image, src };
                 });
-                console.log('added A', diffItem.id);
               }
 
               if (d.item.kind === 'D') {
@@ -145,7 +142,6 @@ const ShopItemAddDialogContainer = () => {
                   ?.filter((image) => image.id !== diffItem.id)
                   .map((image) => ({ ...image, src: image.src || '' }));
                 storage.ref(`shop_items/${open.id}/${diffItem.id}`);
-                console.log('deleted A', diffItem.id);
               }
             }
 
@@ -157,7 +153,6 @@ const ShopItemAddDialogContainer = () => {
                 ?.filter((image) => image.id !== lhs)
                 .map((image) => ({ ...image, src: image.src || '' }));
               storage.ref(`shop_items/${open.id}/${lhs}`);
-              console.log('deleted E', lhs);
 
               const rhs = d.rhs as unknown as string;
               if (before.some((item) => item.id === rhs)) continue;
@@ -171,7 +166,6 @@ const ShopItemAddDialogContainer = () => {
                 if (image.id !== rhs) return image;
                 return { ...image, src };
               });
-              console.log('added E', rhs);
             }
           }
         }
