@@ -43,7 +43,7 @@ const Shop: React.FC<Props> = ({ match }) => {
           align='center'
           style={{
             marginBottom: '2rem',
-            marginTop: '3rem',
+            marginTop: '4rem',
             fontWeight: 'bold',
           }}
         >

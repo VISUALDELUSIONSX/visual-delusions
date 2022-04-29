@@ -26,11 +26,11 @@ const useCollection = <T>(path: string, options?: UseCollectionOptions) => {
           options.where[2]
         );
       const unsubscribe = query.onSnapshot((snap) => {
-        const categories = snap.docs.map((doc) => ({
+        const data = snap.docs.map((doc) => ({
           ...(doc.data() as T),
           id: doc.id,
         }));
-        setData(categories);
+        setData(data);
         setLoading(false);
       });
       setUnsubscribe(() => unsubscribe);

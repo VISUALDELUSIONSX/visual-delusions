@@ -1,5 +1,6 @@
 import {
   Button,
+  CircularProgress,
   Dialog,
   Fab,
   Grid,
@@ -14,7 +15,6 @@ import { v4 as uuid } from 'uuid';
 import { FileWithId } from '../types/client';
 import imageCompression from 'browser-image-compression';
 import convert from 'heic-convert';
-import Spinner from './Spinner';
 
 const useStyles = makeStyles(() => ({
   thumbsContainer: {
@@ -139,7 +139,9 @@ const DragDropZone: React.FC<Props> = ({
   }, [defaultImages]);
 
   return defaultImagesLoading ? (
-    <Spinner />
+    <Grid container justifyContent='center'>
+      <CircularProgress />
+    </Grid>
   ) : (
     <section className={classes.container}>
       <Dialog maxWidth='sm' fullWidth open={loadingOptimization}>
@@ -150,7 +152,9 @@ const DragDropZone: React.FC<Props> = ({
           <Typography gutterBottom align='center'>
             We are optimizing your images before uploading
           </Typography>
-          <Spinner style={{ margin: '0 auto' }} />
+          <Grid container justifyContent='center'>
+            <CircularProgress />
+          </Grid>
         </div>
       </Dialog>
       <div {...getRootProps({ className: classes.dropZone })}>
@@ -201,7 +205,7 @@ const DragDropZone: React.FC<Props> = ({
           <Grid item>
             <Button
               onClick={() => {
-                onUpload(files);
+                onUpload?.(files);
                 onClose && onClose();
               }}
               variant='contained'

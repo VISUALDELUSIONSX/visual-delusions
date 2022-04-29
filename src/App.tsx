@@ -1,4 +1,8 @@
-import { ThemeProvider, CssBaseline } from '@material-ui/core';
+import {
+  ThemeProvider,
+  CssBaseline,
+  CircularProgress,
+} from '@material-ui/core';
 import Header from './components/Header';
 import Home from './pages/Home';
 import { theme } from './theme';
@@ -14,8 +18,8 @@ import { FirestoreTextEditorProvider } from 'firestore-text-editor';
 import About from './pages/About';
 import FAQ from './pages/FAQ';
 import Contact from './pages/Contact';
-import Spinner from './components/Spinner';
 import { useAppSelector } from './hooks/useAppSelector';
+import ShopItem from './pages/ShopItem';
 
 function App() {
   const isAdmin = useAppSelector((state) => state.auth.user?.isAdmin);
@@ -27,7 +31,7 @@ function App() {
         editIconStyle={{ color: '#aaa' }}
         saveIconStyle={{ color: '#aaa' }}
         cancelIconStyle={{ color: '#aaa' }}
-        loader={<Spinner />}
+        loader={<CircularProgress />}
         isEditable={!!isAdmin}
       >
         <ThemeProvider theme={theme}>
@@ -44,6 +48,11 @@ function App() {
               <Route exact path='/contact' component={Contact} />
               <Route exact path='/shop' component={Shop} />
               <Route exact path='/shop/:category' component={Shop} />
+              <Route
+                exact
+                path='/shop/:category/:shopItemId'
+                component={ShopItem}
+              />
               <PrivateRoute exact path='/admin' component={Admin} />
             </Switch>
           </main>
@@ -54,3 +63,4 @@ function App() {
 }
 
 export default App;
+

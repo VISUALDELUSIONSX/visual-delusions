@@ -1,7 +1,7 @@
+import { CircularProgress, Grid } from '@material-ui/core';
 import React from 'react';
 import { Route, Redirect, RouteProps } from 'react-router-dom';
 import { useAppSelector } from '../hooks/useAppSelector';
-import Spinner from './Spinner';
 
 interface Props extends RouteProps {
   component: any;
@@ -27,7 +27,9 @@ const PrivateRoute: React.FC<Props> = ({ component: Component, ...rest }) => {
       }
     />
   ) : (
-    <Spinner style={{ margin: '0 auto' }} />
+    <Grid container justifyContent='center'>
+      <CircularProgress />
+    </Grid>
   );
 };
 
