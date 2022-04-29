@@ -17,7 +17,6 @@ import useDoc from '../hooks/useDoc';
 import { Category, ShopItem as ShopItemType } from '../types/client';
 import ImageGallery from 'react-image-gallery';
 import 'react-image-gallery/styles/css/image-gallery.css';
-import useCollection from '../hooks/useCollection';
 import Bar from '../components/Bar';
 import { theme } from '../theme';
 import { formatPrice } from '../utils';
@@ -57,13 +56,9 @@ const ShopItem: React.FC<Props> = ({ match }) => {
   const dispatch = useAppDispatch();
   const [description, setDescription] = useState(EditorState.createEmpty());
   const [shopItem, shopItemLoading] = useDoc<ShopItemType>(`shop_items/${id}`);
-  const [categories, categoriesLoading] = useCollection<Category>(
-    'categories',
-    {
-      where: ['slug', '==', categorySlug],
-    }
+  const [category, categoryLoading] = useDoc<Category>(
+    `categories/${categorySlug}`
   );
-  const category = categories[0];
 
   useEffect(() => {
     shopItem?.description &&
@@ -76,7 +71,7 @@ const ShopItem: React.FC<Props> = ({ match }) => {
 
   return (
     <Container maxWidth='lg' style={{ paddingTop: '4rem' }}>
-      {shopItemLoading || categoriesLoading ? (
+      {shopItemLoading || categoryLoading ? (
         <Grid container justifyContent='center'>
           <CircularProgress color='secondary' />
         </Grid>

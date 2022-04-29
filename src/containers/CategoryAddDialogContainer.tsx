@@ -41,7 +41,7 @@ const CategoryAddDialogContainer = () => {
         }
         (typeof open === 'object'
           ? db.doc(`categories/${open.id}`).update(category)
-          : db.collection('categories').add(category)
+          : db.doc(`categories/${category.slug}`).set(category)
         )
           .then(() => {
             setLoading(false);
