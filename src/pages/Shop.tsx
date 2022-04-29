@@ -99,16 +99,18 @@ const Shop: React.FC<Props> = ({ match }) => {
             <Grid item key={c.id}>
               <NeonButton
                 endIcon={
-                  <IconButton
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      dispatch(setIsCategoryDeleteDialogOpen(c));
-                    }}
-                    style={{ color: theme.palette.error.main }}
-                    size='small'
-                  >
-                    <Delete fontSize='small' />
-                  </IconButton>
+                  isAdmin && (
+                    <IconButton
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        dispatch(setIsCategoryDeleteDialogOpen(c));
+                      }}
+                      style={{ color: theme.palette.error.main }}
+                      size='small'
+                    >
+                      <Delete fontSize='small' />
+                    </IconButton>
+                  )
                 }
                 color='primary'
                 variant={c.slug === category ? 'contained' : 'outlined'}
