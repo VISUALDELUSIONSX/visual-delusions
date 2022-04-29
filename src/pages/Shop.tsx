@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Container, Grid } from '@material-ui/core';
+import { Button, Container, Grid, IconButton } from '@material-ui/core';
 import { RouteComponentProps, useHistory } from 'react-router-dom';
 import ShopItemPreview from '../components/ShopItemPreview';
 import { useAppSelector } from '../hooks/useAppSelector';
@@ -10,10 +10,14 @@ import useCollection from '../hooks/useCollection';
 import { Skeleton } from '@material-ui/lab';
 import { useAppDispatch } from '../hooks/useAppDispatch';
 import {
+  setIsCategoryAddDialogOpen,
+  setIsCategoryDeleteDialogOpen,
   setIsShopItemAddDialogOpen,
   setIsShopItemDeleteDialogOpen,
 } from '../store/simpleValuesSlice';
 import ShopItemLoading from '../components/ShopItemLoading';
+import { Delete } from '@material-ui/icons';
+import { theme } from '../theme';
 
 interface MatchProps {
   category?: string;
@@ -50,6 +54,16 @@ const Shop: React.FC<Props> = ({ match }) => {
           OUR SELECTION
         </NeonTypography>
 
+        {isAdmin && (
+          <Button
+            style={{ display: 'block', margin: '0 auto', marginBottom: '1rem' }}
+            variant='contained'
+            onClick={() => dispatch(setIsCategoryAddDialogOpen(true))}
+          >
+            Add Category
+          </Button>
+        )}
+
         <Grid
           container
           direction='row'
@@ -84,6 +98,18 @@ const Shop: React.FC<Props> = ({ match }) => {
           {categories.map((c) => (
             <Grid item key={c.id}>
               <NeonButton
+                endIcon={
+                  <IconButton
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      dispatch(setIsCategoryDeleteDialogOpen(c));
+                    }}
+                    style={{ color: theme.palette.error.main }}
+                    size='small'
+                  >
+                    <Delete fontSize='small' />
+                  </IconButton>
+                }
                 color='primary'
                 variant={c.slug === category ? 'contained' : 'outlined'}
                 onClick={() => history.push(`/shop/${c.slug}`)}
