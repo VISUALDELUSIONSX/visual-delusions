@@ -4,15 +4,18 @@ import { useInView } from 'react-intersection-observer';
 import useAnimation, { AnimationType } from '../hooks/useAnimation';
 import { theme } from '../theme';
 
-export default function NeonTypography<C extends React.ElementType>(
-  props: TypographyProps<C, { component?: C }> & {
-    extraColor?: 'info';
-    animation?: AnimationType;
-  }
-) {
-  const { extraColor, animation, ...rest } = props;
+export type NeonTypographyProps = TypographyProps<any> & {
+  extraColor?: 'info' | 'error';
+  animation?: AnimationType;
+  shadowQuotient?: number;
+};
+
+const NeonTypography: React.FC<NeonTypographyProps> = (props) => {
+  const { extraColor, animation, shadowQuotient = 5, ...rest } = props;
   const color = extraColor
-    ? theme.palette[extraColor].main
+    ? extraColor === 'error'
+      ? theme.palette.error.dark
+      : theme.palette[extraColor].main
     : !props.color || props.color === 'inherit' || props.color === 'initial'
     ? 'white'
     : props.color === 'textPrimary'
@@ -26,7 +29,7 @@ export default function NeonTypography<C extends React.ElementType>(
       ? '1rem'
       : theme.typography[props.variant].fontSize;
 
-  const shadowSize = parseInt(size + 'rem' || '1rem') / 5 + 'rem';
+  const shadowSize = parseInt(size + 'rem' || '1rem') / shadowQuotient + 'rem';
 
   const [ref, , entry] = useInView();
   const isIntersecting = entry?.isIntersecting;
@@ -47,5 +50,7 @@ export default function NeonTypography<C extends React.ElementType>(
       }}
     />
   );
-}
+};
+
+export default NeonTypography;
 
