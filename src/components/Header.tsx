@@ -57,6 +57,12 @@ const useStyles = makeStyles((theme: Theme) => ({
     ...theme.mixins.toolbar,
     justifyContent: 'flex-end',
   },
+  iconButton: {
+    transition: '200ms',
+    '&:hover': {
+      color: theme.palette.secondary.main,
+    },
+  },
   button: {
     transition: '200ms',
     position: 'relative',
@@ -181,6 +187,7 @@ const Header = () => {
                   to='/cart'
                   size='medium'
                   color='inherit'
+                  className={classes.iconButton}
                 >
                   <Badge badgeContent={numOfItemsInCart} color='primary'>
                     <ShoppingCart fontSize='medium' />
@@ -194,13 +201,18 @@ const Header = () => {
                   to='/cart'
                   size='medium'
                   color='inherit'
+                  className={classes.iconButton}
                 >
                   <Badge badgeContent={numOfItemsInCart} color='primary'>
                     <ShoppingCart fontSize='medium' />
                   </Badge>
                 </IconButton>
 
-                <IconButton onClick={handleDrawerToggle} color='inherit'>
+                <IconButton
+                  onClick={handleDrawerToggle}
+                  color='inherit'
+                  className={classes.iconButton}
+                >
                   <MenuIcon />
                 </IconButton>
               </>
