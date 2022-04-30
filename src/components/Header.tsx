@@ -25,6 +25,7 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import { useAppSelector } from '../hooks/useAppSelector';
 import { useAuth } from 'react-redux-firebase-auth';
 import { ShoppingCart } from '@material-ui/icons';
+import getNumOfItemsInCart from '../utils/getNumOfItemsInCart';
 // import { displaySignInDialog } from '../store/authSlice';
 // import { useAppDispatch } from '../hooks/useAppDispatch';
 
@@ -107,10 +108,7 @@ const Header = () => {
   const { signOut } = useAuth();
   const { loaded, user } = useAppSelector((state) => state.auth);
   const cartItems = useAppSelector((state) => state.cart.items);
-  const numOfItemsInCart = cartItems.reduce(
-    (acc, cur) => acc + cur.quantity,
-    0
-  );
+  const numOfItemsInCart = getNumOfItemsInCart(cartItems);
 
   useEffect(() => {
     /* Header animates on mount */
