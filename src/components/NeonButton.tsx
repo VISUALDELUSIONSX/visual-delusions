@@ -7,12 +7,13 @@ interface Props extends ButtonProps {
 }
 
 const NeonButton: React.FC<Props> = (props) => {
+  const { extraColor, ...rest } = props;
   const color =
-    props.extraColor === 'textSecondary'
+    extraColor === 'textSecondary'
       ? theme.palette.text.secondary
-      : props.extraColor === 'error'
+      : extraColor === 'error'
       ? theme.palette.error.main
-      : props.extraColor === 'info'
+      : extraColor === 'info'
       ? theme.palette.info.main
       : !props.color || props.color === 'inherit' || props.color === 'default'
       ? 'white'
@@ -30,7 +31,7 @@ const NeonButton: React.FC<Props> = (props) => {
           ? undefined
           : `0 0 calc(${shadowSize} / 4) #fff,  0 0 ${shadowSize} ${color}, 0 0 ${shadowSize} ${color}, 0 0 calc(${shadowSize} * 1.5) ${color}, 0 0 ${shadowSize} ${color}, 0 0 ${shadowSize} ${color}`,
       }}
-      {...props}
+      {...rest}
     />
   );
 };
