@@ -1,7 +1,5 @@
 import {
-  alpha,
   Button,
-  Card,
   CardContent,
   Grid,
   makeStyles,
@@ -14,6 +12,7 @@ import noImage from '../images/no-image.png';
 import { theme } from '../theme';
 import { formatPrice } from '../utils';
 import Bar from './Bar';
+import NeonCard from './NeonCard';
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -51,16 +50,13 @@ const ShopItemPreview: React.FC<Props> = ({
   const isOdd = i % 2 === 0;
 
   return (
-    <Card
+    <NeonCard
       className={classes.card}
       onClick={() => history.push(`/shop/${category}/${id}`)}
       role='link'
-      style={{
-        boxShadow: `2px 2px 20px ${alpha(
-          isOdd ? theme.palette.info.main : theme.palette.secondary.main,
-          0.4
-        )}`,
-      }}
+      shadowColor={
+        isOdd ? theme.palette.info.main : theme.palette.secondary.main
+      }
     >
       <div>
         <img
@@ -103,7 +99,6 @@ const ShopItemPreview: React.FC<Props> = ({
 
           <Grid item>
             <Typography
-              // color='primary'
               variant='h5'
               component='h3'
               align='center'
@@ -145,7 +140,7 @@ const ShopItemPreview: React.FC<Props> = ({
           )}
         </Grid>
       </CardContent>
-    </Card>
+    </NeonCard>
   );
 };
 

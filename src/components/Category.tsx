@@ -1,6 +1,5 @@
 import {
   Button,
-  Card,
   CardContent,
   Grid,
   makeStyles,
@@ -12,12 +11,12 @@ import { useHistory } from 'react-router-dom';
 import useAnimation from '../hooks/useAnimation';
 import noImage from '../images/no-image.png';
 import { theme } from '../theme';
+import NeonCard from './NeonCard';
 
 const useStyles = makeStyles((theme) => ({
   card: {
     background: theme.palette.background.default,
     height: '100%',
-    boxShadow: `2px 2px 20px rgba(126,76,203, 0.4)`,
     cursor: 'pointer',
     transition: '200ms',
 
@@ -52,12 +51,13 @@ const Category: React.FC<Props> = ({
   });
 
   return (
-    <Card
+    <NeonCard
       ref={ref}
       className={classes.card}
       onClick={() => history.push(href)}
       role='link'
       style={{ ...animation }}
+      shadowColor={theme.palette.info.main}
     >
       <img
         style={{ width: '100%', height: '300px', objectFit: 'cover' }}
@@ -115,7 +115,7 @@ const Category: React.FC<Props> = ({
           )}
         </Grid>
       </CardContent>
-    </Card>
+    </NeonCard>
   );
 };
 
