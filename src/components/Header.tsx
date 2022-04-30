@@ -12,6 +12,7 @@ import {
   ListItemText,
   Divider,
   alpha,
+  Badge,
 } from '@material-ui/core';
 import NeonTypography from './NeonTypography';
 import { useEffect, useRef, useState } from 'react';
@@ -23,6 +24,7 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import { useAppSelector } from '../hooks/useAppSelector';
 import { useAuth } from 'react-redux-firebase-auth';
+import { ShoppingCart } from '@material-ui/icons';
 // import { displaySignInDialog } from '../store/authSlice';
 // import { useAppDispatch } from '../hooks/useAppDispatch';
 
@@ -96,8 +98,13 @@ const Header = () => {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const mdUp = useMediaQuery(theme.breakpoints.up('md'));
   const handleDrawerToggle = () => setDrawerOpen((prev) => !prev);
-  const { loaded, user } = useAppSelector((state) => state.auth);
   const { signOut } = useAuth();
+  const { loaded, user } = useAppSelector((state) => state.auth);
+  const cartItems = useAppSelector((state) => state.cart.items);
+  const numOfItemsInCart = cartItems.reduce(
+    (acc, cur) => acc + cur.quantity,
+    0
+  );
 
   useEffect(() => {
     /* Header animates on mount */
@@ -169,11 +176,34 @@ const Header = () => {
               >
                 Login
               </Button> */}
+                <IconButton
+                  component={Link}
+                  to='/cart'
+                  size='medium'
+                  color='inherit'
+                >
+                  <Badge badgeContent={numOfItemsInCart} color='primary'>
+                    <ShoppingCart fontSize='medium' />
+                  </Badge>
+                </IconButton>
               </>
             ) : (
-              <IconButton onClick={handleDrawerToggle} color='inherit'>
-                <MenuIcon />
-              </IconButton>
+              <>
+                <IconButton
+                  component={Link}
+                  to='/cart'
+                  size='medium'
+                  color='inherit'
+                >
+                  <Badge badgeContent={numOfItemsInCart} color='primary'>
+                    <ShoppingCart fontSize='medium' />
+                  </Badge>
+                </IconButton>
+
+                <IconButton onClick={handleDrawerToggle} color='inherit'>
+                  <MenuIcon />
+                </IconButton>
+              </>
             )}
           </div>
         </Toolbar>

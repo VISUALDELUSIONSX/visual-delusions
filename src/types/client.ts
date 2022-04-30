@@ -24,6 +24,10 @@ export interface ShopItem extends DBShopItem {
   i?: number;
 }
 
+export interface CartItem extends ShopItem {
+  quantity: number;
+}
+
 export interface DBCategory {
   image?: { src: string; id: string } | null;
   name: string;

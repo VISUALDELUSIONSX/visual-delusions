@@ -2,9 +2,11 @@ import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { authReducer, AuthReducer } from 'react-redux-firebase-auth';
 import { User } from '../types/client';
 import simpleValues from './simpleValuesSlice';
+import cart from './cartSlice';
 
 export const reducer = combineReducers({
   auth: authReducer as AuthReducer<User>,
+  cart,
   simpleValues,
 });
 

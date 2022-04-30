@@ -27,6 +27,7 @@ import {
   setIsShopItemAddDialogOpen,
   setIsShopItemDeleteDialogOpen,
 } from '../store/simpleValuesSlice';
+import { addTocart } from '../store/cartSlice';
 
 const useStyles = makeStyles({
   original: {
@@ -71,7 +72,7 @@ const ShopItem: React.FC<Props> = ({ match }) => {
 
   return (
     <Container maxWidth='lg' style={{ paddingTop: '4rem' }}>
-      {shopItemLoading || categoryLoading ? (
+      {shopItemLoading || categoryLoading || !shopItem ? (
         <Grid container justifyContent='center'>
           <CircularProgress color='secondary' />
         </Grid>
@@ -83,7 +84,7 @@ const ShopItem: React.FC<Props> = ({ match }) => {
               showPlayButton={false}
               showFullscreenButton={false}
               items={
-                shopItem?.images?.map((image) => ({
+                shopItem.images?.map((image) => ({
                   original: image.src,
                   originalAlt: image.alt,
                   originalClass: classes.original,
@@ -151,7 +152,7 @@ const ShopItem: React.FC<Props> = ({ match }) => {
                 style={{ fontWeight: 700 }}
                 gutterBottom
               >
-                {shopItem?.name}
+                {shopItem.name}
               </Typography>
 
               <Bar
@@ -164,7 +165,7 @@ const ShopItem: React.FC<Props> = ({ match }) => {
                 gutterBottom
                 style={{ fontWeight: 'bold', fontSize: '1.5rem' }}
               >
-                {formatPrice(shopItem?.price || 0)}
+                {formatPrice(shopItem.price || 0)}
               </Typography>
 
               <Editor
@@ -196,6 +197,9 @@ const ShopItem: React.FC<Props> = ({ match }) => {
                     size='large'
                     color='secondary'
                     variant='contained'
+                    onClick={() =>
+                      dispatch(addTocart({ ...shopItem, quantity: 1 }))
+                    }
                   >
                     Add To Cart
                   </NeonButton>
