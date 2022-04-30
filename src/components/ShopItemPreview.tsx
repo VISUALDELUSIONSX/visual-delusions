@@ -30,8 +30,8 @@ const useStyles = makeStyles((theme) => ({
 
 interface Props extends ShopItem {
   isAdmin?: boolean;
-  onEditItem: () => any;
-  onDeleteItem: () => any;
+  onEditItem?: () => any;
+  onDeleteItem?: () => any;
 }
 
 const ShopItemPreview: React.FC<Props> = ({
@@ -110,32 +110,36 @@ const ShopItemPreview: React.FC<Props> = ({
 
           {isAdmin && (
             <>
-              <Grid item>
-                <Button
-                  variant='contained'
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    onEditItem();
-                  }}
-                >
-                  Edit Item
-                </Button>
-              </Grid>
-              <Grid item>
-                <Button
-                  variant='contained'
-                  style={{
-                    background: theme.palette.error.main,
-                    color: 'white',
-                  }}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    onDeleteItem();
-                  }}
-                >
-                  Delete Item
-                </Button>
-              </Grid>
+              {onEditItem && (
+                <Grid item>
+                  <Button
+                    variant='contained'
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      onEditItem();
+                    }}
+                  >
+                    Edit Item
+                  </Button>
+                </Grid>
+              )}
+              {onDeleteItem && (
+                <Grid item>
+                  <Button
+                    variant='contained'
+                    style={{
+                      background: theme.palette.error.main,
+                      color: 'white',
+                    }}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      onDeleteItem();
+                    }}
+                  >
+                    Delete Item
+                  </Button>
+                </Grid>
+              )}
             </>
           )}
         </Grid>
