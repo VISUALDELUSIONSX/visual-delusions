@@ -40,7 +40,7 @@ const ShopItemPreview: React.FC<Props> = ({
   price,
   previewImage,
   category,
-  shadowColor,
+  shadowColor = '#fff',
   id,
   isAdmin,
   onEditItem,
@@ -93,7 +93,7 @@ const ShopItemPreview: React.FC<Props> = ({
               style={{
                 height: '2px',
                 width: '50px',
-                backgroundColor: shadowColor || '',
+                backgroundColor: shadowColor,
               }}
             />
           </Grid>
