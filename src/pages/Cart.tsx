@@ -32,11 +32,13 @@ import {
   saveForLater,
 } from '../store/cartSlice';
 import SavedForLaterItem from '../components/SavedForLaterItem';
+import getNumOfSavedItems from '../utils/getNumOfSavedItems';
 
 const Cart = () => {
   const dispatch = useAppDispatch();
   const cartItems = useAppSelector((state) => state.cart.items);
   const numOfItemsInCart = getNumOfItemsInCart(cartItems);
+  const numOfSavedItems = getNumOfSavedItems(cartItems);
   const subtotal = getSubtotal(cartItems);
   const [shopItems, shopItemsLoading] = useCollection<ShopItem>('shop_items');
   const exploreMoreItems = useMemo(
@@ -145,21 +147,26 @@ const Cart = () => {
           <Grid item xs={12}>
             <NeonCard shadowColor={theme.palette.primary.main}>
               <div style={{ padding: '2rem' }}>
-                <CartSubtitle color='primary'>Saved For Later</CartSubtitle>
+                <CartSubtitle style={{ marginBottom: '2rem' }} color='primary'>
+                  Saved For Later ({numOfSavedItems} item
+                  {numOfSavedItems !== 1 ? 's' : ''})
+                </CartSubtitle>
 
-                {savedForLaterItems.map((item, i) => (
-                  <Grid item xs={12} sm={6} md={4} lg={3} key={i}>
-                    <SavedForLaterItem
-                      {...item}
-                      previewImage={item.images?.[0]?.src}
-                      shadowColor={theme.palette.primary.main}
-                      onMoveToCart={() => dispatch(moveToCart(item.id))}
-                      onRemoveItem={() =>
-                        dispatch(removeFromCart({ id: item.id }))
-                      }
-                    />
-                  </Grid>
-                ))}
+                <Grid container spacing={4}>
+                  {savedForLaterItems.map((item, i) => (
+                    <Grid item xs={12} sm={6} md={4} lg={3} key={item.id}>
+                      <SavedForLaterItem
+                        {...item}
+                        previewImage={item.images?.[0]?.src}
+                        shadowColor={theme.palette.primary.main}
+                        onMoveToCart={() => dispatch(moveToCart(item.id))}
+                        onRemoveItem={() =>
+                          dispatch(removeFromCart({ id: item.id }))
+                        }
+                      />
+                    </Grid>
+                  ))}
+                </Grid>
               </div>
             </NeonCard>
           </Grid>
@@ -169,36 +176,41 @@ const Cart = () => {
           <Grid item xs={12}>
             <NeonCard shadowColor={theme.palette.error.main}>
               <div style={{ padding: '2rem' }}>
-                <CartSubtitle extraColor='error'>
+                <CartSubtitle
+                  style={{ marginBottom: '2rem' }}
+                  extraColor='error'
+                >
                   Explore More Items
                 </CartSubtitle>
 
-                <Carousel
-                  showDots
-                  shouldResetAutoplay={false}
-                  infinite
-                  responsive={carouselResponsive}
-                >
-                  {shopItemsLoading
-                    ? Array(8)
-                        .fill(null)
-                        .map((_, i) => (
-                          <div key={i} style={{ padding: '1rem' }}>
-                            <ShopItemLoading
+                <div style={{ margin: '0 -1rem' }}>
+                  <Carousel
+                    showDots
+                    shouldResetAutoplay={false}
+                    infinite
+                    responsive={carouselResponsive}
+                  >
+                    {shopItemsLoading
+                      ? Array(8)
+                          .fill(null)
+                          .map((_, i) => (
+                            <div key={i} style={{ padding: '0 1rem' }}>
+                              <ShopItemLoading
+                                shadowColor={theme.palette.error.main}
+                              />
+                            </div>
+                          ))
+                      : exploreMoreItems?.map((item, i) => (
+                          <div key={item.id} style={{ padding: '0 1rem' }}>
+                            <ShopItemPreview
+                              {...item}
                               shadowColor={theme.palette.error.main}
+                              previewImage={item.images?.[0]?.src}
                             />
                           </div>
-                        ))
-                    : exploreMoreItems?.map((item, i) => (
-                        <div key={item.id} style={{ padding: '1rem' }}>
-                          <ShopItemPreview
-                            {...item}
-                            shadowColor={theme.palette.error.main}
-                            previewImage={item.images?.[0]?.src}
-                          />
-                        </div>
-                      ))}
-                </Carousel>
+                        ))}
+                  </Carousel>
+                </div>
               </div>
             </NeonCard>
           </Grid>
