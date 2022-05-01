@@ -1,10 +1,10 @@
-import { alpha, Card, makeStyles } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core';
 import { Skeleton } from '@material-ui/lab';
-import { theme } from '../theme';
 import Bar from './Bar';
+import NeonCard from './NeonCard';
 
 interface Props {
-  i: number;
+  shadowColor?: string;
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -20,30 +20,25 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ShopItemLoading: React.FC<Props> = ({ i }) => {
+const ShopItemLoading: React.FC<Props> = ({ shadowColor = '#fff' }) => {
   const classes = useStyles();
-  const isOdd = i % 2 === 0;
 
   return (
-    <Card
-      className={classes.card}
-      style={{
-        boxShadow: `2px 2px 20px ${alpha(
-          isOdd ? theme.palette.info.main : theme.palette.secondary.main,
-          0.4
-        )}`,
-      }}
-    >
+    <NeonCard className={classes.card} shadowColor={shadowColor}>
       <Skeleton variant='rect' height={250} width='100%' animation='wave' />
       <div style={{ padding: '1rem' }}>
         <Skeleton variant='text' height={50} animation='wave' />
         <Bar
-          style={{ height: '2px', width: '50px', marginTop: '5' }}
-          color={isOdd ? 'info' : 'secondary'}
+          style={{
+            height: '2px',
+            width: '50px',
+            marginTop: '5',
+            background: shadowColor,
+          }}
         />
         <Skeleton variant='text' height={50} animation='wave' />
       </div>
-    </Card>
+    </NeonCard>
   );
 };
 

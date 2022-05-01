@@ -20,6 +20,7 @@ import FAQ from './pages/FAQ';
 import Contact from './pages/Contact';
 import { useAppSelector } from './hooks/useAppSelector';
 import ShopItem from './pages/ShopItem';
+import Cart from './pages/Cart';
 
 function App() {
   const isAdmin = useAppSelector((state) => state.auth.user?.isAdmin);
@@ -46,6 +47,7 @@ function App() {
               <Route exact path='/about' component={About} />
               <Route exact path='/faq' component={FAQ} />
               <Route exact path='/contact' component={Contact} />
+              <Route exact path='/cart' component={Cart} />
               <Route exact path='/shop' component={Shop} />
               <Route exact path='/shop/:category' component={Shop} />
               <Route

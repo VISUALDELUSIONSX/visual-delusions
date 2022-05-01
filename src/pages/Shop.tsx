@@ -136,11 +136,20 @@ const Shop: React.FC<Props> = ({ match }) => {
           {shopItemsLoading &&
             Array(8)
               .fill(null)
-              .map((_, i) => (
-                <Grid item xs={12} sm={6} md={4} lg={3}>
-                  <ShopItemLoading i={i} />
-                </Grid>
-              ))}
+              .map((_, i) => {
+                const isOdd = i % 2 === 0;
+                return (
+                  <Grid item xs={12} sm={6} md={4} lg={3}>
+                    <ShopItemLoading
+                      shadowColor={
+                        isOdd
+                          ? theme.palette.info.main
+                          : theme.palette.secondary.main
+                      }
+                    />
+                  </Grid>
+                );
+              })}
 
           {shopItems.map((item, i) => {
             const isOdd = i % 2 === 0;

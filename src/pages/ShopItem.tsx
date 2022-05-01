@@ -27,7 +27,7 @@ import {
   setIsShopItemAddDialogOpen,
   setIsShopItemDeleteDialogOpen,
 } from '../store/simpleValuesSlice';
-import { addTocart } from '../store/cartSlice';
+import { addToCart } from '../store/cartSlice';
 
 const useStyles = makeStyles({
   original: {
@@ -198,7 +198,7 @@ const ShopItem: React.FC<Props> = ({ match }) => {
                     color='secondary'
                     variant='contained'
                     onClick={() =>
-                      dispatch(addTocart({ ...shopItem, quantity: 1 }))
+                      dispatch(addToCart({ ...shopItem, quantity: 1 }))
                     }
                   >
                     Add To Cart

@@ -21,11 +21,11 @@ export interface DBShopItem {
 
 export interface ShopItem extends DBShopItem {
   id: string;
-  i?: number;
 }
 
 export interface CartItem extends ShopItem {
   quantity: number;
+  savedForLater?: boolean;
 }
 
 export interface DBCategory {
