@@ -26,8 +26,10 @@ import { useAppSelector } from '../hooks/useAppSelector';
 import { useAuth } from 'react-redux-firebase-auth';
 import { ShoppingCart } from '@material-ui/icons';
 import getNumOfItemsInCart from '../utils/getNumOfItemsInCart';
-// import { displaySignInDialog } from '../store/authSlice';
-// import { useAppDispatch } from '../hooks/useAppDispatch';
+import RichTooltip from './RichTooltip';
+import CartTooltipContent from './CartTooltipContent';
+import { useAppDispatch } from '../hooks/useAppDispatch';
+import { closeAddedToCart } from '../store/cartSlice';
 
 const drawerWidth = 240;
 
@@ -100,13 +102,14 @@ const menuItems = [
 
 const Header = () => {
   const classes = useStyles();
-  // const dispatch = useAppDispatch();
+  const dispatch = useAppDispatch();
   const headerRef = useRef<HTMLElement>(null);
   const [drawerOpen, setDrawerOpen] = useState(false);
   const mdUp = useMediaQuery(theme.breakpoints.up('md'));
   const handleDrawerToggle = () => setDrawerOpen((prev) => !prev);
   const { signOut } = useAuth();
   const { loaded, user } = useAppSelector((state) => state.auth);
+  const openAddedToCart = useAppSelector((state) => state.cart.openAddedToCart);
   const cartItems = useAppSelector((state) => state.cart.items);
   const numOfItemsInCart = getNumOfItemsInCart(cartItems);
 
@@ -122,6 +125,33 @@ const Header = () => {
 
     //eslint-disable-next-line
   }, []);
+
+  const CartButton = () => (
+    <RichTooltip
+      open={openAddedToCart}
+      placement='bottom'
+      content={<CartTooltipContent />}
+      backgroundColor='#333'
+      PopperProps={{
+        style: {
+          boxShadow: `0px 0px 20px ${alpha(theme.palette.primary.main, 0.8)}`,
+        },
+      }}
+    >
+      <IconButton
+        component={Link}
+        to='/cart'
+        size='medium'
+        color='inherit'
+        className={classes.iconButton}
+        onClick={() => dispatch(closeAddedToCart())}
+      >
+        <Badge badgeContent={numOfItemsInCart} color='primary'>
+          <ShoppingCart fontSize='medium' />
+        </Badge>
+      </IconButton>
+    </RichTooltip>
+  );
 
   return (
     <div>
@@ -172,39 +202,11 @@ const Header = () => {
                     Logout
                   </Button>
                 )}
-                {/* <Button
-                onClick={() => dispatch(displaySignInDialog())}
-                color='inherit'
-                style={{ marginLeft: '0.5rem' }}
-                size='large'
-              >
-                Login
-              </Button> */}
-                <IconButton
-                  component={Link}
-                  to='/cart'
-                  size='medium'
-                  color='inherit'
-                  className={classes.iconButton}
-                >
-                  <Badge badgeContent={numOfItemsInCart} color='primary'>
-                    <ShoppingCart fontSize='medium' />
-                  </Badge>
-                </IconButton>
+                <CartButton />
               </>
             ) : (
               <>
-                <IconButton
-                  component={Link}
-                  to='/cart'
-                  size='medium'
-                  color='inherit'
-                  className={classes.iconButton}
-                >
-                  <Badge badgeContent={numOfItemsInCart} color='primary'>
-                    <ShoppingCart fontSize='medium' />
-                  </Badge>
-                </IconButton>
+                <CartButton />
 
                 <IconButton
                   onClick={handleDrawerToggle}
@@ -258,15 +260,6 @@ const Header = () => {
             <ListItem button onClick={signOut}>
               <ListItemText primary='Logout' />
             </ListItem>
-            {/* <ListItem
-              button
-              onClick={() => {
-                dispatch(displaySignInDialog());
-                handleDrawerToggle();
-              }}
-            >
-              <ListItemText primary='Login' />
-            </ListItem> */}
           </List>
         </Drawer>
       )}

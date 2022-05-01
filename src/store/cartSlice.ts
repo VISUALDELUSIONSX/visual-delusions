@@ -3,10 +3,12 @@ import { CartItem } from '../types/client';
 
 interface CartState {
   items: CartItem[];
+  openAddedToCart: boolean;
 }
 
 const initialState: CartState = {
   items: [],
+  openAddedToCart: false,
 };
 
 export const cartSlice = createSlice({
@@ -28,6 +30,7 @@ export const cartSlice = createSlice({
         // add item to cart
         state.items = [...state.items, action.payload];
       }
+      state.openAddedToCart = true;
     },
     removeFromCart: (
       state,
@@ -67,10 +70,18 @@ export const cartSlice = createSlice({
         return item;
       });
     },
+    closeAddedToCart: (state) => {
+      state.openAddedToCart = false;
+    },
   },
 });
 
-export const { addToCart, removeFromCart, saveForLater, moveToCart } =
-  cartSlice.actions;
+export const {
+  addToCart,
+  removeFromCart,
+  saveForLater,
+  moveToCart,
+  closeAddedToCart,
+} = cartSlice.actions;
 
 export default cartSlice.reducer;

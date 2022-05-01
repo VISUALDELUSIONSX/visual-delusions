@@ -14,10 +14,11 @@ import { formatPrice } from '../utils';
 import { Add, Remove } from '@material-ui/icons';
 
 interface Props extends CartItemType {
-  onAddQuantity: () => any;
-  onReduceQuantity: () => any;
-  onRemoveItem: () => any;
-  onSaveForLater: () => any;
+  onAddQuantity?: () => any;
+  onReduceQuantity?: () => any;
+  onRemoveItem?: () => any;
+  onSaveForLater?: () => any;
+  imageSize?: number | string;
 }
 
 const CartItem: React.FC<Props> = ({
@@ -27,6 +28,7 @@ const CartItem: React.FC<Props> = ({
   name,
   price,
   quantity,
+  imageSize,
   onAddQuantity,
   onReduceQuantity,
   onRemoveItem,
@@ -34,7 +36,7 @@ const CartItem: React.FC<Props> = ({
 }) => {
   const previewImage = images?.[0]?.src || noImage;
   const smDown = useMediaQuery(theme.breakpoints.down('sm'));
-  const imageDimension = smDown ? 100 : 150;
+  const imageDimension = imageSize || smDown ? 100 : 150;
 
   return (
     <Grid container wrap='nowrap'>
@@ -74,44 +76,58 @@ const CartItem: React.FC<Props> = ({
         </Grid>
 
         <Grid item>
-          <Typography variant='body2' gutterBottom>
-            Quantity
-          </Typography>
-          <Grid container direction='row' alignItems='center' wrap='nowrap'>
-            <Button
-              style={{ minWidth: 0, padding: 5 }}
-              variant='outlined'
-              onClick={onReduceQuantity}
-            >
-              <Remove fontSize='small' />
-            </Button>
-            <Typography style={{ margin: '0 1rem' }}>{quantity}</Typography>
-            <Button
-              style={{ minWidth: 0, padding: 5 }}
-              variant='outlined'
-              onClick={onAddQuantity}
-            >
-              <Add fontSize='small' />
-            </Button>
-          </Grid>
+          {onReduceQuantity && onAddQuantity ? (
+            <>
+              <Typography variant='body2' gutterBottom>
+                Quantity
+              </Typography>
+              <Grid container direction='row' alignItems='center' wrap='nowrap'>
+                <Button
+                  style={{ minWidth: 0, padding: 5 }}
+                  variant='outlined'
+                  onClick={onReduceQuantity}
+                >
+                  <Remove fontSize='small' />
+                </Button>
+                <Typography style={{ margin: '0 1rem' }}>{quantity}</Typography>
+                <Button
+                  style={{ minWidth: 0, padding: 5 }}
+                  variant='outlined'
+                  onClick={onAddQuantity}
+                >
+                  <Add fontSize='small' />
+                </Button>
+              </Grid>
+            </>
+          ) : (
+            <Typography variant='body2' gutterBottom>
+              Quantity: {quantity}
+            </Typography>
+          )}
         </Grid>
 
-        <Grid item style={{ marginLeft: '-5px' }}>
-          <Button
-            onClick={onRemoveItem}
-            size='small'
-            style={{ textTransform: 'capitalize' }}
-          >
-            Remove
-          </Button>
-          <Button
-            onClick={onSaveForLater}
-            size='small'
-            style={{ textTransform: 'capitalize' }}
-          >
-            Save For Later
-          </Button>
-        </Grid>
+        {(onRemoveItem || onSaveForLater) && (
+          <Grid item style={{ marginLeft: '-5px' }}>
+            {onRemoveItem && (
+              <Button
+                onClick={onRemoveItem}
+                size='small'
+                style={{ textTransform: 'capitalize' }}
+              >
+                Remove
+              </Button>
+            )}
+            {onSaveForLater && (
+              <Button
+                onClick={onSaveForLater}
+                size='small'
+                style={{ textTransform: 'capitalize' }}
+              >
+                Save For Later
+              </Button>
+            )}
+          </Grid>
+        )}
       </Grid>
     </Grid>
   );
