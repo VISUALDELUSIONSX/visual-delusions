@@ -43,7 +43,7 @@ const Shop: React.FC<Props> = ({ match }) => {
           animation='fadeIn'
           component='h1'
           variant='h2'
-          color='primary'
+          color={theme.palette.primary.main}
           align='center'
           style={{
             marginBottom: '2rem',

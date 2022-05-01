@@ -163,7 +163,7 @@ const Header = () => {
       >
         <Toolbar>
           <NeonTypography
-            color='secondary'
+            color={theme.palette.secondary.main}
             variant='h4'
             className={classes.title}
             component={Link}

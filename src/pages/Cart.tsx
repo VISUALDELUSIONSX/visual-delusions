@@ -57,7 +57,7 @@ const Cart = () => {
         animation='fadeIn'
         component='h1'
         variant='h2'
-        color='primary'
+        color={theme.palette.primary.main}
         align='center'
         style={{
           marginBottom: '2rem',
@@ -75,7 +75,9 @@ const Cart = () => {
               style={{ padding: '2rem', width: '100%' }}
               shadowColor={theme.palette.info.main}
             >
-              <CartSubtitle extraColor='info'>Shopping Cart</CartSubtitle>
+              <CartSubtitle color={theme.palette.info.main}>
+                Shopping Cart
+              </CartSubtitle>
               <Divider />
               {filteredCartItems.length ? (
                 <List disablePadding>
@@ -123,7 +125,9 @@ const Cart = () => {
               style={{ padding: '2rem' }}
               shadowColor={theme.palette.secondary.main}
             >
-              <CartSubtitle color='secondary'>Checkout</CartSubtitle>
+              <CartSubtitle color={theme.palette.secondary.main}>
+                Checkout
+              </CartSubtitle>
 
               <Typography style={{ marginBottom: '1rem' }}>
                 <b>Subtotal: </b>
@@ -145,9 +149,13 @@ const Cart = () => {
 
         {!!savedForLaterItems.length && (
           <Grid item xs={12}>
-            <NeonCard shadowColor={theme.palette.primary.main}>
+            <NeonCard shadowColor={theme.palette.warning.main}>
               <div style={{ padding: '2rem' }}>
-                <CartSubtitle style={{ marginBottom: '2rem' }} color='primary'>
+                <CartSubtitle
+                  style={{ marginBottom: '2rem' }}
+                  color={theme.palette.warning.dark}
+                  shadowQuotient={3}
+                >
                   Saved For Later ({numOfSavedItems} item
                   {numOfSavedItems !== 1 ? 's' : ''})
                 </CartSubtitle>
@@ -158,7 +166,7 @@ const Cart = () => {
                       <SavedForLaterItem
                         {...item}
                         previewImage={item.images?.[0]?.src}
-                        shadowColor={theme.palette.primary.main}
+                        shadowColor={theme.palette.warning.main}
                         onMoveToCart={() => dispatch(moveToCart(item.id))}
                         onRemoveItem={() =>
                           dispatch(removeFromCart({ id: item.id }))
@@ -178,7 +186,7 @@ const Cart = () => {
               <div style={{ padding: '2rem' }}>
                 <CartSubtitle
                   style={{ marginBottom: '2rem' }}
-                  extraColor='error'
+                  color={theme.palette.error.main}
                 >
                   Explore More Items
                 </CartSubtitle>

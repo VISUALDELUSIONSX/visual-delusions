@@ -17,7 +17,7 @@ const About = () => {
           component='h1'
           align='center'
           variant='h3'
-          extraColor='info'
+          color={theme.palette.info.main}
         >
           ABOUT
         </NeonTypography>

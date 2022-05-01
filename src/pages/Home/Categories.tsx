@@ -34,7 +34,7 @@ const Categories = () => {
           <NeonTypography
             variant='h3'
             component='h2'
-            extraColor='info'
+            color={theme.palette.info.main}
             align='center'
             style={{ marginBottom: '4rem', ...titleAnimation }}
           >

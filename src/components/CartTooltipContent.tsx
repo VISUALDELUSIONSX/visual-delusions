@@ -16,6 +16,7 @@ import CartItem from './CartItem';
 import NeonTypography from './NeonTypography';
 import { useAppDispatch } from '../hooks/useAppDispatch';
 import { closeAddedToCart } from '../store/cartSlice';
+import { theme } from '../theme';
 
 const CartTooltipContent = () => {
   const cartItems = useAppSelector((state) => state.cart.items);
@@ -32,7 +33,7 @@ const CartTooltipContent = () => {
     >
       <Grid item>
         <NeonTypography
-          color='primary'
+          color={theme.palette.primary.main}
           variant='h4'
           style={{ fontWeight: 'bold' }}
         >

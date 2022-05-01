@@ -6,6 +6,7 @@ import NeonTypography from '../../components/NeonTypography';
 import hero from '../../images/hero.jpg';
 import { useInView } from 'react-intersection-observer';
 import useAnimation from '../../hooks/useAnimation';
+import { theme } from '../../theme';
 
 const Hero = () => {
   const history = useHistory();
@@ -51,7 +52,7 @@ const Hero = () => {
               style={{ fontWeight: 700 }}
               align='center'
               variant='h1'
-              color='primary'
+              color={theme.palette.primary.main}
             >
               Saving Our Earth
             </NeonTypography>

@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useInView } from 'react-intersection-observer';
 import useAnimation from '../../hooks/useAnimation';
+import { theme } from '../../theme';
 
 interface ContactFormDetails {
   name: string;
@@ -67,7 +68,7 @@ const Contact = () => {
           <NeonTypography
             variant='h3'
             component='h2'
-            color='secondary'
+            color={theme.palette.secondary.main}
             gutterBottom
             align='center'
             style={{ marginBottom: '3rem' }}

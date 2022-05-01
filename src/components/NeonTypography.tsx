@@ -4,25 +4,19 @@ import { useInView } from 'react-intersection-observer';
 import useAnimation, { AnimationType } from '../hooks/useAnimation';
 import { theme } from '../theme';
 
-export type NeonTypographyProps = TypographyProps<any> & {
-  extraColor?: 'info' | 'error';
+export type NeonTypographyProps<C extends React.ElementType> = Omit<
+  TypographyProps<C>,
+  'color'
+> & {
+  color?: string;
   animation?: AnimationType;
   shadowQuotient?: number;
 };
 
-const NeonTypography: React.FC<NeonTypographyProps> = (props) => {
-  const { extraColor, animation, shadowQuotient = 5, ...rest } = props;
-  const color = extraColor
-    ? extraColor === 'error'
-      ? theme.palette.error.dark
-      : theme.palette[extraColor].main
-    : !props.color || props.color === 'inherit' || props.color === 'initial'
-    ? 'white'
-    : props.color === 'textPrimary'
-    ? theme.palette.text.primary
-    : props.color === 'textSecondary'
-    ? theme.palette.text.secondary
-    : theme.palette[props.color].main;
+function NeonTypography<C extends React.ElementType>(
+  props: NeonTypographyProps<C>
+) {
+  const { color = '#fff', animation, shadowQuotient = 5, ...rest } = props;
 
   const size =
     !props.variant || props.variant === 'inherit' || props.variant === 'srOnly'
@@ -50,7 +44,7 @@ const NeonTypography: React.FC<NeonTypographyProps> = (props) => {
       }}
     />
   );
-};
+}
 
 export default NeonTypography;
 

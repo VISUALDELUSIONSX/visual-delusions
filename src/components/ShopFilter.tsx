@@ -47,7 +47,11 @@ const ShopFilter: React.FC<Props> = ({ categories, defaultCategory }) => {
       <CardContent>
         <Grid container direction='column' spacing={4}>
           <Grid item>
-            <NeonTypography color='primary' variant='h4' align='center'>
+            <NeonTypography
+              color={theme.palette.primary.main}
+              variant='h4'
+              align='center'
+            >
               FILTER
             </NeonTypography>
             <Bar
