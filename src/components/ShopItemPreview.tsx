@@ -32,6 +32,7 @@ interface Props extends ShopItem {
   isAdmin?: boolean;
   onEditItem?: () => any;
   onDeleteItem?: () => any;
+  shadowColor?: string;
 }
 
 const ShopItemPreview: React.FC<Props> = ({
@@ -39,24 +40,21 @@ const ShopItemPreview: React.FC<Props> = ({
   price,
   previewImage,
   category,
+  shadowColor,
   id,
-  i = 0,
   isAdmin,
   onEditItem,
   onDeleteItem,
 }) => {
   const history = useHistory();
   const classes = useStyles();
-  const isOdd = i % 2 === 0;
 
   return (
     <NeonCard
       className={classes.card}
       onClick={() => history.push(`/shop/${category}/${id}`)}
       role='link'
-      shadowColor={
-        isOdd ? theme.palette.info.main : theme.palette.secondary.main
-      }
+      shadowColor={shadowColor}
     >
       <div>
         <img
@@ -92,8 +90,11 @@ const ShopItemPreview: React.FC<Props> = ({
 
           <Grid item>
             <Bar
-              style={{ height: '2px', width: '50px' }}
-              color={isOdd ? 'info' : 'secondary'}
+              style={{
+                height: '2px',
+                width: '50px',
+                backgroundColor: shadowColor || '',
+              }}
             />
           </Grid>
 

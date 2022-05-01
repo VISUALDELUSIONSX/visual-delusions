@@ -142,23 +142,30 @@ const Shop: React.FC<Props> = ({ match }) => {
                 </Grid>
               ))}
 
-          {shopItems.map((item, i) => (
-            <Grid item xs={12} sm={6} md={4} lg={3} key={i}>
-              <ShopItemPreview
-                name={item.name}
-                price={item.price}
-                category={item.category}
-                id={item.id}
-                i={i}
-                previewImage={item.images?.[0]?.src}
-                isAdmin={isAdmin}
-                onEditItem={() => dispatch(setIsShopItemAddDialogOpen(item))}
-                onDeleteItem={() =>
-                  dispatch(setIsShopItemDeleteDialogOpen(item))
-                }
-              />
-            </Grid>
-          ))}
+          {shopItems.map((item, i) => {
+            const isOdd = i % 2 === 0;
+            return (
+              <Grid item xs={12} sm={6} md={4} lg={3} key={i}>
+                <ShopItemPreview
+                  name={item.name}
+                  price={item.price}
+                  category={item.category}
+                  id={item.id}
+                  shadowColor={
+                    isOdd
+                      ? theme.palette.info.main
+                      : theme.palette.secondary.main
+                  }
+                  previewImage={item.images?.[0]?.src}
+                  isAdmin={isAdmin}
+                  onEditItem={() => dispatch(setIsShopItemAddDialogOpen(item))}
+                  onDeleteItem={() =>
+                    dispatch(setIsShopItemDeleteDialogOpen(item))
+                  }
+                />
+              </Grid>
+            );
+          })}
         </Grid>
       </Container>
     </div>
