@@ -36,7 +36,11 @@ const Categories = () => {
             component='h2'
             color={theme.palette.info.main}
             align='center'
-            style={{ marginBottom: '4rem', ...titleAnimation }}
+            style={{
+              marginBottom: '4rem',
+              fontWeight: 'bold',
+              ...titleAnimation,
+            }}
           >
             CATEGORIES
           </NeonTypography>

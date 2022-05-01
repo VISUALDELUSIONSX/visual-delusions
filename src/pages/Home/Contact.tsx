@@ -71,7 +71,7 @@ const Contact = () => {
             color={theme.palette.secondary.main}
             gutterBottom
             align='center'
-            style={{ marginBottom: '3rem' }}
+            style={{ marginBottom: '3rem', fontWeight: 'bold' }}
           >
             CONTACT
           </NeonTypography>

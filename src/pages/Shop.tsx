@@ -139,7 +139,7 @@ const Shop: React.FC<Props> = ({ match }) => {
               .map((_, i) => {
                 const isOdd = i % 2 === 0;
                 return (
-                  <Grid item xs={12} sm={6} md={4} lg={3}>
+                  <Grid item xs={12} sm={6} md={4} lg={3} key={i}>
                     <ShopItemLoading
                       shadowColor={
                         isOdd
