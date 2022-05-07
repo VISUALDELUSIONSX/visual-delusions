@@ -13,6 +13,9 @@ import { theme } from '../theme';
 import { formatPrice } from '../utils';
 import Bar from './Bar';
 import NeonCard from './NeonCard';
+import NeonButton from './NeonButton';
+import { addToCart } from '../store/cartSlice';
+import { useAppDispatch } from '../hooks/useAppDispatch';
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -48,6 +51,7 @@ const ShopItemPreview: React.FC<Props> = ({
 }) => {
   const history = useHistory();
   const classes = useStyles();
+  const dispatch = useAppDispatch();
 
   return (
     <NeonCard
@@ -107,6 +111,43 @@ const ShopItemPreview: React.FC<Props> = ({
             >
               {formatPrice(price || 0)}
             </Typography>
+          </Grid>
+
+          <Grid
+            item
+            container
+            direction='row'
+            spacing={3}
+            style={{ marginTop: '0.5rem' }}
+            justifyContent='center'
+          >
+            <Grid item>
+              <NeonButton
+                onClick={(e) => {
+                  e.stopPropagation();
+                }}
+                size='small'
+                color='secondary'
+                variant='outlined'
+              >
+                Buy Now
+              </NeonButton>
+            </Grid>
+            <Grid item>
+              <NeonButton
+                size='small'
+                color='secondary'
+                variant='contained'
+                onClick={(e) => {
+                  e.stopPropagation();
+                  dispatch(
+                    addToCart({ id, name, price, category, quantity: 1 })
+                  );
+                }}
+              >
+                Add To Cart
+              </NeonButton>
+            </Grid>
           </Grid>
 
           {isAdmin && (
