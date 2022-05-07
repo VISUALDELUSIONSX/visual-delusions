@@ -162,7 +162,7 @@ const Contact = () => {
               <NeonButton
                 disabled={loadingContactMessage}
                 variant='outlined'
-                color='secondary'
+                color={theme.palette.secondary.main}
                 type='submit'
                 fullWidth
                 size='large'

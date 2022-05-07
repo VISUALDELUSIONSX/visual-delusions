@@ -80,7 +80,7 @@ const Shop: React.FC<Props> = ({ match }) => {
         >
           <Grid item>
             <NeonButton
-              color='primary'
+              color={theme.palette.primary.main}
               variant={!category ? 'contained' : 'outlined'}
               onClick={() => history.push(`/shop`)}
             >
@@ -119,7 +119,7 @@ const Shop: React.FC<Props> = ({ match }) => {
                     </IconButton>
                   )
                 }
-                color='primary'
+                color={theme.palette.primary.main}
                 variant={c.slug === category ? 'contained' : 'outlined'}
                 onClick={() => history.push(`/shop/${c.slug}`)}
               >

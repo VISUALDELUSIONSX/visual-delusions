@@ -127,7 +127,7 @@ const ShopItemPreview: React.FC<Props> = ({
                   e.stopPropagation();
                 }}
                 size='small'
-                color='secondary'
+                color={shadowColor}
                 variant='outlined'
               >
                 Buy Now
@@ -136,7 +136,7 @@ const ShopItemPreview: React.FC<Props> = ({
             <Grid item>
               <NeonButton
                 size='small'
-                color='secondary'
+                color={shadowColor}
                 variant='contained'
                 onClick={(e) => {
                   e.stopPropagation();

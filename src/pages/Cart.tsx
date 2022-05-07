@@ -112,7 +112,7 @@ const Cart = () => {
                     There doesn't seem to be any items in your cart
                   </Typography>
 
-                  <NeonButton extraColor='info' size='large'>
+                  <NeonButton color={theme.palette.info.main} size='large'>
                     Shop Now
                   </NeonButton>
                 </>
@@ -136,7 +136,7 @@ const Cart = () => {
 
               <NeonButton
                 variant='contained'
-                color='secondary'
+                color={theme.palette.secondary.main}
                 fullWidth
                 disabled={numOfItemsInCart < 1}
               >

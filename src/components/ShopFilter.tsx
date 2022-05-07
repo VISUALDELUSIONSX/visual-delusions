@@ -119,7 +119,7 @@ const ShopFilter: React.FC<Props> = ({ categories, defaultCategory }) => {
             </div>
           </Grid>
           <Grid item style={{ alignSelf: 'center' }}>
-            <NeonButton variant='outlined' color='primary'>
+            <NeonButton variant='outlined' color={theme.palette.primary.main}>
               Filter
             </NeonButton>
           </Grid>

@@ -76,7 +76,7 @@ const Hero = () => {
           <Grid item ref={buttonRef} style={{ ...buttonAnimation }}>
             <NeonButton
               variant='contained'
-              color='primary'
+              color={theme.palette.primary.main}
               size='large'
               onClick={() => history.push('/shop')}
             >

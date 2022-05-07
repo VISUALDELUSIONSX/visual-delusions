@@ -188,14 +188,18 @@ const ShopItem: React.FC<Props> = ({ match }) => {
                 style={{ marginTop: '2rem' }}
               >
                 <Grid item>
-                  <NeonButton size='large' color='secondary' variant='outlined'>
+                  <NeonButton
+                    size='large'
+                    color={theme.palette.secondary.main}
+                    variant='outlined'
+                  >
                     Buy Now
                   </NeonButton>
                 </Grid>
                 <Grid item>
                   <NeonButton
                     size='large'
-                    color='secondary'
+                    color={theme.palette.secondary.main}
                     variant='contained'
                     onClick={() =>
                       dispatch(addToCart({ ...shopItem, quantity: 1 }))

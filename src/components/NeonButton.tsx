@@ -1,24 +1,12 @@
 import { Button, ButtonProps } from '@material-ui/core';
 import React from 'react';
-import { theme } from '../theme';
 
-interface Props extends ButtonProps {
-  extraColor?: 'textSecondary' | 'error' | 'info';
+interface Props extends Omit<ButtonProps, 'color'> {
+  color?: string;
 }
 
 const NeonButton: React.FC<Props> = (props) => {
-  const { extraColor, ...rest } = props;
-  const color =
-    extraColor === 'textSecondary'
-      ? theme.palette.text.secondary
-      : extraColor === 'error'
-      ? theme.palette.error.main
-      : extraColor === 'info'
-      ? theme.palette.info.main
-      : !props.color || props.color === 'inherit' || props.color === 'default'
-      ? 'white'
-      : theme.palette[props.color].main;
-
+  const { color, ...rest } = props;
   const shadowSize = '1rem';
 
   return (
@@ -26,6 +14,8 @@ const NeonButton: React.FC<Props> = (props) => {
       style={{
         ...props.style,
         boxShadow: props.disabled ? undefined : `0px 0px 10px 5px ${color}`,
+        backgroundColor:
+          props.disabled || props.variant !== 'contained' ? undefined : color,
         color: 'white',
         textShadow: props.disabled
           ? undefined
