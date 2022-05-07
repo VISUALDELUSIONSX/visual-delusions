@@ -1,4 +1,4 @@
-import { Button, Container, Grid } from '@material-ui/core';
+import { Button, Container, Grid, useMediaQuery } from '@material-ui/core';
 import React from 'react';
 import { useInView } from 'react-intersection-observer';
 import Category from '../../components/Category';
@@ -24,6 +24,7 @@ const Categories = () => {
   const [titleRef, , titleEntry] = useInView({ delay: 100 });
   const isTitleIntersecting = titleEntry?.isIntersecting;
   const titleAnimation = useAnimation('fadeIn', isTitleIntersecting);
+  const xsDown = useMediaQuery(theme.breakpoints.down('xs'));
 
   return (
     <section
@@ -32,7 +33,7 @@ const Categories = () => {
       <Container>
         <div ref={titleRef}>
           <NeonTypography
-            variant='h3'
+            variant={xsDown ? 'h4' : 'h3'}
             component='h2'
             color={theme.palette.info.main}
             align='center'

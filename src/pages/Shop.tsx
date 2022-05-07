@@ -1,5 +1,11 @@
 import React from 'react';
-import { Button, Container, Grid, IconButton } from '@material-ui/core';
+import {
+  Button,
+  Container,
+  Grid,
+  IconButton,
+  useMediaQuery,
+} from '@material-ui/core';
 import { RouteComponentProps, useHistory } from 'react-router-dom';
 import ShopItemPreview from '../components/ShopItemPreview';
 import { useAppSelector } from '../hooks/useAppSelector';
@@ -30,6 +36,7 @@ const Shop: React.FC<Props> = ({ match }) => {
   const history = useHistory();
   const dispatch = useAppDispatch();
   const isAdmin = useAppSelector((state) => state.auth.user?.isAdmin);
+  const xsDown = useMediaQuery(theme.breakpoints.down('xs'));
 
   const [categories, categoriesLoading] = useCollection<Category>('categories');
   const [shopItems, shopItemsLoading] = useCollection<ShopItem>('shop_items', {
@@ -42,7 +49,7 @@ const Shop: React.FC<Props> = ({ match }) => {
         <NeonTypography
           animation='fadeIn'
           component='h1'
-          variant='h2'
+          variant={xsDown ? 'h3' : 'h2'}
           color={theme.palette.primary.main}
           align='center'
           style={{

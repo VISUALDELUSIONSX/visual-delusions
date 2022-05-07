@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Grid, Typography } from '@material-ui/core';
+import { Container, Grid, Typography, useMediaQuery } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
 import NeonButton from '../../components/NeonButton';
 import NeonTypography from '../../components/NeonTypography';
@@ -10,6 +10,8 @@ import { theme } from '../../theme';
 
 const Hero = () => {
   const history = useHistory();
+  const xsDown = useMediaQuery(theme.breakpoints.down('xs'));
+  const smDown = useMediaQuery(theme.breakpoints.down('sm'));
 
   const [titleRef, , titleEntry] = useInView({ delay: 100 });
   const [subtitleRef, , subtitleEntry] = useInView({ delay: 100 });
@@ -49,7 +51,10 @@ const Hero = () => {
         >
           <Grid item ref={titleRef} style={{ ...titleAnimation }}>
             <NeonTypography
-              style={{ fontWeight: 700 }}
+              style={{
+                fontSize: xsDown ? 60 : smDown ? 80 : undefined,
+                fontWeight: 700,
+              }}
               align='center'
               variant='h1'
               color={theme.palette.primary.main}
@@ -59,7 +64,11 @@ const Hero = () => {
           </Grid>
 
           <Grid item ref={subtitleRef} style={{ ...subtitleAnimation }}>
-            <Typography align='center' variant='h4'>
+            <Typography
+              align='center'
+              component='p'
+              variant={xsDown ? 'h5' : 'h4'}
+            >
               One Lighter At A Time
             </Typography>
           </Grid>

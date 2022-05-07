@@ -113,6 +113,9 @@ const Header = () => {
   const cartItems = useAppSelector((state) => state.cart.items);
   const numOfItemsInCart = getNumOfItemsInCart(cartItems);
 
+  const below430 = useMediaQuery('(max-width:430px)');
+  const below375 = useMediaQuery('(max-width:375px)');
+
   useEffect(() => {
     /* Header animates on mount */
     const header = headerRef.current!;
@@ -165,6 +168,7 @@ const Header = () => {
           <NeonTypography
             color={theme.palette.secondary.main}
             variant='h4'
+            style={{ fontSize: below375 ? 20 : below430 ? 27 : undefined }}
             className={classes.title}
             component={Link}
             to='/'

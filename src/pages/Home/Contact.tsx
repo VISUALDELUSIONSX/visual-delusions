@@ -1,4 +1,10 @@
-import { Container, Grid, TextField, Typography } from '@material-ui/core';
+import {
+  Container,
+  Grid,
+  TextField,
+  Typography,
+  useMediaQuery,
+} from '@material-ui/core';
 import NeonButton from '../../components/NeonButton';
 import NeonTypography from '../../components/NeonTypography';
 import { useState } from 'react';
@@ -14,6 +20,7 @@ interface ContactFormDetails {
 }
 
 const Contact = () => {
+  const xsDown = useMediaQuery(theme.breakpoints.down('xs'));
   const [loadingContactMessage, setLoadingContactMessage] = useState(false);
   const {
     register,
@@ -66,7 +73,7 @@ const Contact = () => {
       <Container>
         <div ref={titleRef} style={{ ...titleAnimation }}>
           <NeonTypography
-            variant='h3'
+            variant={xsDown ? 'h4' : 'h3'}
             component='h2'
             color={theme.palette.secondary.main}
             gutterBottom
