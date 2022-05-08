@@ -1,0 +1,19 @@
+{
+  "name": "pages/about/theArtistSrc",
+  "bucket": "visualdelusions-b6d13.appspot.com",
+  "contentType": "image/jpeg",
+  "metageneration": 1,
+  "generation": 1652023003793,
+  "storageClass": "STANDARD",
+  "etag": "someETag",
+  "contentDisposition": "inline",
+  "contentEncoding": "identity",
+  "downloadTokens": [
+    "d363ea3e-085e-43fe-bede-47436b5f0e0d"
+  ],
+  "timeCreated": "2022-05-08T15:16:43.792Z",
+  "updated": "2022-05-08T15:16:43.794Z",
+  "size": 73253,
+  "md5Hash": "bQJMwYfE4H5BcV4osH5RhA==",
+  "crc32c": "919919047"
+}

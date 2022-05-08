@@ -1,0 +1,19 @@
+{
+  "name": "pages/about/howItStartedSrc",
+  "bucket": "visualdelusions-b6d13.appspot.com",
+  "contentType": "image/jpeg",
+  "metageneration": 1,
+  "generation": 1652023038511,
+  "storageClass": "STANDARD",
+  "etag": "someETag",
+  "contentDisposition": "inline",
+  "contentEncoding": "identity",
+  "downloadTokens": [
+    "cb6881a3-7653-461d-b60b-9f83076427c7"
+  ],
+  "timeCreated": "2022-05-08T15:17:18.510Z",
+  "updated": "2022-05-08T15:17:18.512Z",
+  "size": 88731,
+  "md5Hash": "bzx43zhcneiEr9U+sZthug==",
+  "crc32c": "979834518"
+}
