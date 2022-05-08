@@ -6,7 +6,12 @@ import {
 import Header from './components/Header';
 import Home from './pages/Home';
 import { theme } from './theme';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from 'react-router-dom';
 import Admin from './pages/Admin';
 import Login from './pages/Login';
 import { app } from './services/firebase';
@@ -56,6 +61,7 @@ function App() {
                 component={ShopItem}
               />
               <PrivateRoute exact path='/admin' component={Admin} />
+              <Redirect to='/' />
             </Switch>
           </main>
         </ThemeProvider>

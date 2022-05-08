@@ -20,7 +20,7 @@ const useDoc = <T>(path: string) => {
           ...(doc.data() as T),
           id: doc.id,
         };
-        setData(data);
+        doc.exists && setData(data);
         setLoading(false);
       });
       setUnsubscribe(() => unsubscribe);

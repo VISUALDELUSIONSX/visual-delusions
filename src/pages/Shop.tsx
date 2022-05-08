@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   Button,
   Container,
@@ -42,6 +42,10 @@ const Shop: React.FC<Props> = ({ match }) => {
   const [shopItems, shopItemsLoading] = useCollection<ShopItem>('shop_items', {
     where: category ? ['category', '==', category] : undefined,
   });
+
+  useEffect(() => {
+    if (!categories.some((c) => c.slug === category)) history.push('/shop');
+  }, [category, categories, history]);
 
   return (
     <div>

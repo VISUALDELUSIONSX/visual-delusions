@@ -12,7 +12,7 @@ import {
 import { convertFromRaw, EditorState } from 'draft-js';
 import React, { useEffect, useState } from 'react';
 import { Editor } from 'react-draft-wysiwyg';
-import { Link, RouteComponentProps } from 'react-router-dom';
+import { Link, RouteComponentProps, useHistory } from 'react-router-dom';
 import useDoc from '../hooks/useDoc';
 import { Category, ShopItem as ShopItemType } from '../types/client';
 import ImageGallery from 'react-image-gallery';
@@ -51,6 +51,7 @@ interface Props extends RouteComponentProps<MatchProps> {}
 
 const ShopItem: React.FC<Props> = ({ match }) => {
   const classes = useStyles();
+  const history = useHistory();
   const id = match.params.shopItemId;
   const categorySlug = match.params.category;
   const isAdmin = useAppSelector((state) => state.auth.user?.isAdmin);
@@ -60,6 +61,10 @@ const ShopItem: React.FC<Props> = ({ match }) => {
   const [category, categoryLoading] = useDoc<Category>(
     `categories/${categorySlug}`
   );
+
+  useEffect(() => {
+    if (!shopItem && !shopItemLoading) history.push('/shop');
+  }, [history, shopItem, shopItemLoading]);
 
   useEffect(() => {
     shopItem?.description &&
