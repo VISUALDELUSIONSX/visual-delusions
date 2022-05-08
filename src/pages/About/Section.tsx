@@ -52,7 +52,10 @@ const Section: React.FC<Props> = ({
 
   return (
     <section>
-      <NeonCard shadowColor={color}>
+      <NeonCard
+        shadowColor={color}
+        animation={reverse ? 'slideLeft' : 'slideRight'}
+      >
         <div style={{ padding: '2rem' }}>
           <Grid
             container
