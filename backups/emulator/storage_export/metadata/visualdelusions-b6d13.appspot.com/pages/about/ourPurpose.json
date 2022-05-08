@@ -1,0 +1,19 @@
+{
+  "name": "pages/about/ourPurpose",
+  "bucket": "visualdelusions-b6d13.appspot.com",
+  "contentType": "image/jpeg",
+  "metageneration": 1,
+  "generation": 1652015972914,
+  "storageClass": "STANDARD",
+  "etag": "someETag",
+  "contentDisposition": "inline",
+  "contentEncoding": "identity",
+  "downloadTokens": [
+    "0065550c-956b-49ed-9b6d-ae377648b7fe"
+  ],
+  "timeCreated": "2022-05-08T13:19:32.913Z",
+  "updated": "2022-05-08T13:19:32.915Z",
+  "size": 54022,
+  "md5Hash": "TdtkBE0EPWUjReBM1/SQIQ==",
+  "crc32c": "1700086880"
+}
