@@ -1,7 +1,8 @@
 import {
+  CircularProgress,
   Container,
   Grid,
-  TextField,
+  Snackbar,
   Typography,
   useMediaQuery,
 } from '@material-ui/core';
@@ -12,6 +13,9 @@ import { useForm } from 'react-hook-form';
 import { useInView } from 'react-intersection-observer';
 import useAnimation from '../../hooks/useAnimation';
 import { theme } from '../../theme';
+import { callableContactSubmission } from '../../services/firebase';
+import ColoredTextField from '../../components/ColoredTextField';
+import { Alert } from '@material-ui/lab';
 
 interface ContactFormDetails {
   name: string;
@@ -22,14 +26,26 @@ interface ContactFormDetails {
 const Contact = () => {
   const xsDown = useMediaQuery(theme.breakpoints.down('xs'));
   const [loadingContactMessage, setLoadingContactMessage] = useState(false);
+  const [openSubmissionSuccess, setOpenSubmissionSuccess] = useState(false);
+  const [openSubmissionFail, setOpenSubmissionFail] = useState(false);
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<ContactFormDetails>();
 
-  const onSubmitContactForm = (data: ContactFormDetails) => {
+  const onSubmitContactForm = async (data: ContactFormDetails) => {
     setLoadingContactMessage(true);
+    await callableContactSubmission(data)
+      .then(() => {
+        reset();
+        setOpenSubmissionSuccess(true);
+      })
+      .catch((err) => {
+        console.error(err);
+        setOpenSubmissionFail(true);
+      });
     setLoadingContactMessage(false);
   };
 
@@ -75,7 +91,7 @@ const Contact = () => {
           <NeonTypography
             variant={xsDown ? 'h4' : 'h3'}
             component='h2'
-            color={theme.palette.secondary.main}
+            color={theme.palette.warning.dark}
             gutterBottom
             align='center'
             style={{ marginBottom: '3rem', fontWeight: 'bold' }}
@@ -90,7 +106,7 @@ const Contact = () => {
         >
           <Grid container direction='column' spacing={3}>
             <Grid item ref={nameRef} style={{ ...nameAnimation }}>
-              <TextField
+              <ColoredTextField
                 inputRef={register({ required: 'Name is required' })}
                 id='name'
                 label='Name'
@@ -98,8 +114,8 @@ const Contact = () => {
                 autoComplete='name'
                 name='name'
                 aria-invalid={errors.email ? 'true' : 'false'}
-                variant='filled'
-                color='secondary'
+                variant='outlined'
+                color={theme.palette.warning.main}
               />
 
               {errors.name && (
@@ -110,7 +126,7 @@ const Contact = () => {
             </Grid>
 
             <Grid item ref={emailRef} style={{ ...emailAnimation }}>
-              <TextField
+              <ColoredTextField
                 inputRef={register({ required: 'Email is required' })}
                 id='email'
                 label='Email'
@@ -118,8 +134,8 @@ const Contact = () => {
                 autoComplete='email'
                 name='email'
                 aria-invalid={errors.email ? 'true' : 'false'}
-                variant='filled'
-                color='secondary'
+                variant='outlined'
+                color={theme.palette.warning.main}
               />
 
               {errors.email && (
@@ -130,7 +146,7 @@ const Contact = () => {
             </Grid>
 
             <Grid item ref={messageRef} style={{ ...messageAnimation }}>
-              <TextField
+              <ColoredTextField
                 inputRef={register({ required: 'Message is required' })}
                 id='message'
                 label='Message'
@@ -140,9 +156,8 @@ const Contact = () => {
                 autoComplete='message'
                 name='message'
                 aria-invalid={errors.message ? 'true' : 'false'}
-                variant='filled'
-                color='primary'
-                InputProps={{ color: 'secondary' }}
+                variant='outlined'
+                color={theme.palette.warning.main}
               />
 
               {errors.message && (
@@ -162,14 +177,42 @@ const Contact = () => {
               <NeonButton
                 disabled={loadingContactMessage}
                 variant='outlined'
-                color={theme.palette.secondary.main}
+                color={theme.palette.warning.main}
                 type='submit'
-                fullWidth
                 size='large'
+                endIcon={
+                  loadingContactMessage ? (
+                    <CircularProgress
+                      size={20}
+                      style={{ color: theme.palette.warning.main }}
+                    />
+                  ) : undefined
+                }
               >
                 Send
               </NeonButton>
             </Grid>
+
+            <Snackbar
+              open={openSubmissionSuccess}
+              autoHideDuration={6000}
+              onClose={() => setOpenSubmissionSuccess(false)}
+            >
+              <Alert variant='filled' severity='success'>
+                Your message has been sent! We will get back to your shortly
+              </Alert>
+            </Snackbar>
+
+            <Snackbar
+              open={openSubmissionFail}
+              autoHideDuration={6000}
+              onClose={() => setOpenSubmissionFail(false)}
+            >
+              <Alert variant='filled' severity='error'>
+                Your message failed to send! Please try again or email us
+                directly at samanthavlachos00@gmail.com
+              </Alert>
+            </Snackbar>
           </Grid>
         </form>
       </Container>
