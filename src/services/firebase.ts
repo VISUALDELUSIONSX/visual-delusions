@@ -26,10 +26,10 @@ export type WhereFilterOp = firebase.firestore.WhereFilterOp;
 export const callableContactSubmission =
   functions.httpsCallable('contactSubmission');
 
-// if (process.env.NODE_ENV === 'development') {
-//   auth.useEmulator('http://localhost:9099');
-//   db.useEmulator('localhost', 8080);
-//   functions.useEmulator('localhost', 5001);
-//   storage.useEmulator('localhost', 9199);
-// }
+if (process.env.NODE_ENV === 'development') {
+  auth.useEmulator('http://localhost:9099');
+  db.useEmulator('localhost', 8080);
+  functions.useEmulator('localhost', 5001);
+  storage.useEmulator('localhost', 9199);
+}
 
