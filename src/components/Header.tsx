@@ -37,8 +37,8 @@ const useStyles = makeStyles((theme: Theme) => ({
   root: {
     transition: '400ms',
     background: theme.palette.background.default,
-    borderBottom: `1px solid ${theme.palette.secondary.main}`,
-    boxShadow: `0px 5px 5px ${alpha(theme.palette.secondary.main, 0.2)}`,
+    borderBottom: `1px solid ${theme.palette.pink.main}`,
+    boxShadow: `0px 5px 5px ${alpha(theme.palette.pink.main, 0.2)}`,
   },
   rootAnimate: {
     transform: 'translateY(-100%)',
@@ -63,8 +63,11 @@ const useStyles = makeStyles((theme: Theme) => ({
   iconButton: {
     transition: '200ms',
     '&:hover': {
-      color: theme.palette.secondary.main,
+      color: theme.palette.pink.main,
     },
+  },
+  badge: {
+    background: theme.palette.pink.main,
   },
   button: {
     transition: '200ms',
@@ -75,7 +78,7 @@ const useStyles = makeStyles((theme: Theme) => ({
       content: '""',
       height: '3px',
       width: '100%',
-      background: theme.palette.secondary.main,
+      background: theme.palette.pink.main,
       position: 'absolute',
       bottom: '0',
       left: '0',
@@ -149,7 +152,11 @@ const Header = () => {
         className={classes.iconButton}
         onClick={() => dispatch(closeAddedToCart())}
       >
-        <Badge badgeContent={numOfItemsInCart} color='primary'>
+        <Badge
+          badgeContent={numOfItemsInCart}
+          color='primary'
+          classes={{ badge: classes.badge }}
+        >
           <ShoppingCart fontSize='medium' />
         </Badge>
       </IconButton>
@@ -166,7 +173,7 @@ const Header = () => {
       >
         <Toolbar>
           <NeonTypography
-            color={theme.palette.secondary.main}
+            color={theme.palette.pink.main}
             variant='h4'
             style={{ fontSize: below375 ? 20 : below430 ? 27 : undefined }}
             className={classes.title}

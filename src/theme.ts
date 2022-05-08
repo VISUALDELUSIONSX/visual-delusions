@@ -13,35 +13,38 @@ export const theme = unstable_createMuiStrictModeTheme({
       main: 'rgb(242, 218, 0)',
     },
     secondary: {
-      main: '#3A9197',
+      main: '#7E4CCB',
     },
     info: {
-      main: '#7E4CCB',
+      main: '#3A9197',
     },
     background: {
       paper: '#111',
       default: '#0a0a0a',
     },
+    pink: {
+      main: 'rgb(191, 0, 156)',
+    },
   },
   typography: {
     fontFamily: "'Montserrat', sans-serif",
     h1: {
-      fontWeight: 300,
+      fontWeight: 700,
     },
     h2: {
-      fontWeight: 300,
+      fontWeight: 700,
     },
     h3: {
-      fontWeight: 300,
+      fontWeight: 700,
     },
     h4: {
-      fontWeight: 300,
+      fontWeight: 700,
     },
     h5: {
-      fontWeight: 300,
+      fontWeight: 700,
     },
     h6: {
-      fontWeight: 300,
+      fontWeight: 700,
     },
   },
 });
