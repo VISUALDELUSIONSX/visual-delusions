@@ -59,7 +59,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-interface Props {
+export interface ImageDropzoneProps {
   options?: DropzoneOptions;
   onUpload?: (files: any[]) => any;
   onClose?: () => any;
@@ -70,7 +70,7 @@ interface Props {
   defaultImagesLoading?: boolean;
 }
 
-const DragDropZone: React.FC<Props> = ({
+const ImageDropzone: React.FC<ImageDropzoneProps> = ({
   options,
   onUpload,
   onClose,
@@ -195,7 +195,7 @@ const DragDropZone: React.FC<Props> = ({
       <Grid container spacing={1}>
         {onClose && (
           <Grid item>
-            <Button onClick={onClose} variant='contained'>
+            <Button size='small' onClick={onClose} variant='contained'>
               Close
             </Button>
           </Grid>
@@ -204,6 +204,7 @@ const DragDropZone: React.FC<Props> = ({
         {onUpload && !!files.length && (
           <Grid item>
             <Button
+              size='small'
               onClick={() => {
                 onUpload?.(files);
                 onClose && onClose();
@@ -219,4 +220,4 @@ const DragDropZone: React.FC<Props> = ({
     </section>
   );
 };
-export default DragDropZone;
+export default ImageDropzone;
