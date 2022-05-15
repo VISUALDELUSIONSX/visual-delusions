@@ -91,7 +91,7 @@ const Contact = () => {
           <NeonTypography
             variant={xsDown ? 'h4' : 'h3'}
             component='h2'
-            color={theme.palette.warning.dark}
+            color={theme.palette.secondary.dark}
             gutterBottom
             align='center'
             style={{ marginBottom: '3rem', fontWeight: 'bold' }}
@@ -115,7 +115,7 @@ const Contact = () => {
                 name='name'
                 aria-invalid={errors.email ? 'true' : 'false'}
                 variant='outlined'
-                color={theme.palette.warning.main}
+                color={theme.palette.secondary.main}
               />
 
               {errors.name && (
@@ -135,7 +135,7 @@ const Contact = () => {
                 name='email'
                 aria-invalid={errors.email ? 'true' : 'false'}
                 variant='outlined'
-                color={theme.palette.warning.main}
+                color={theme.palette.secondary.main}
               />
 
               {errors.email && (
@@ -157,7 +157,7 @@ const Contact = () => {
                 name='message'
                 aria-invalid={errors.message ? 'true' : 'false'}
                 variant='outlined'
-                color={theme.palette.warning.main}
+                color={theme.palette.secondary.main}
               />
 
               {errors.message && (
@@ -177,14 +177,14 @@ const Contact = () => {
               <NeonButton
                 disabled={loadingContactMessage}
                 variant='outlined'
-                color={theme.palette.warning.main}
+                color={theme.palette.secondary.main}
                 type='submit'
                 size='large'
                 endIcon={
                   loadingContactMessage ? (
                     <CircularProgress
                       size={20}
-                      style={{ color: theme.palette.warning.main }}
+                      style={{ color: theme.palette.secondary.main }}
                     />
                   ) : undefined
                 }
