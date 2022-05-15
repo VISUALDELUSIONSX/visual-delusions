@@ -13,6 +13,7 @@ import {
   Divider,
   alpha,
   Badge,
+  Grid,
 } from '@material-ui/core';
 import NeonTypography from './NeonTypography';
 import { useEffect, useRef, useState } from 'react';
@@ -30,6 +31,8 @@ import RichTooltip from './RichTooltip';
 import CartTooltipContent from './CartTooltipContent';
 import { useAppDispatch } from '../hooks/useAppDispatch';
 import { closeAddedToCart } from '../store/cartSlice';
+import Instagram from '@material-ui/icons/Instagram';
+import { HashLink } from 'react-router-hash-link';
 
 const drawerWidth = 240;
 
@@ -96,11 +99,10 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 const menuItems = [
-  { label: 'Home', href: '/' },
   { label: 'Shop', href: '/shop' },
   { label: 'About', href: '/about' },
   { label: 'FAQ', href: '/faq' },
-  { label: 'Contact', href: '/contact' },
+  { label: 'Contact', href: '/#contact' },
 ];
 
 const Header = () => {
@@ -116,8 +118,8 @@ const Header = () => {
   const cartItems = useAppSelector((state) => state.cart.items);
   const numOfItemsInCart = getNumOfItemsInCart(cartItems);
 
-  const below430 = useMediaQuery('(max-width:430px)');
-  const below375 = useMediaQuery('(max-width:375px)');
+  const headingBPOne = useMediaQuery('(max-width:500px)');
+  const headingBPTwo = useMediaQuery('(max-width:440px)');
 
   useEffect(() => {
     /* Header animates on mount */
@@ -147,7 +149,7 @@ const Header = () => {
       <IconButton
         component={Link}
         to='/cart'
-        size='medium'
+        size={headingBPTwo ? 'small' : 'medium'}
         color='inherit'
         className={classes.iconButton}
         onClick={() => dispatch(closeAddedToCart())}
@@ -175,7 +177,9 @@ const Header = () => {
           <NeonTypography
             color={theme.palette.pink.main}
             variant='h4'
-            style={{ fontSize: below375 ? 20 : below430 ? 27 : undefined }}
+            style={{
+              fontSize: headingBPTwo ? 20 : headingBPOne ? 27 : undefined,
+            }}
             className={classes.title}
             component={Link}
             to='/'
@@ -183,12 +187,24 @@ const Header = () => {
             Visual Delusions
           </NeonTypography>
 
+          <IconButton
+            component='a'
+            href='https://www.instagram.com/visualdelusionsx/'
+            size={headingBPTwo ? 'small' : 'medium'}
+            color='inherit'
+            target='_blank'
+            className={classes.iconButton}
+          >
+            <Instagram fontSize='medium' />
+          </IconButton>
+
           <div style={{ marginLeft: 'auto' }}>
             {mdUp ? (
               <>
                 {menuItems.map((item) => (
                   <Button
-                    component={Link}
+                    component={item.href.includes('#') ? HashLink : Link}
+                    smooth
                     to={item.href}
                     color='inherit'
                     className={classes.button}
@@ -216,17 +232,18 @@ const Header = () => {
                 <CartButton />
               </>
             ) : (
-              <>
+              <Grid container direction='row' wrap='nowrap'>
                 <CartButton />
 
                 <IconButton
                   onClick={handleDrawerToggle}
                   color='inherit'
                   className={classes.iconButton}
+                  size={headingBPTwo ? 'small' : 'medium'}
                 >
-                  <MenuIcon />
+                  <MenuIcon fontSize='medium' />
                 </IconButton>
-              </>
+              </Grid>
             )}
           </div>
         </Toolbar>
@@ -261,7 +278,8 @@ const Header = () => {
               <ListItem
                 button
                 key={item.href}
-                component={Link}
+                component={item.href.includes('#') ? HashLink : Link}
+                smooth
                 to={item.href}
                 onClick={handleDrawerToggle}
               >

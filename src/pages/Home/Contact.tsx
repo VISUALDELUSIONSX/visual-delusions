@@ -85,7 +85,7 @@ const Contact = () => {
   );
 
   return (
-    <section style={{ padding: '7rem 0' }}>
+    <section style={{ padding: '7rem 0' }} id='contact'>
       <Container>
         <div ref={titleRef} style={{ ...titleAnimation }}>
           <NeonTypography
