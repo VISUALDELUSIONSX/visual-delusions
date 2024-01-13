@@ -107,8 +107,8 @@ const ImageDropzone: React.FC<ImageDropzoneProps> = ({
           newFile.name = 'name.jpeg';
         }
         const compressedFile = await imageCompression(newFile, {
-          maxSizeMB: 0.1,
-          maxWidthOrHeight: 1000,
+          maxSizeMB: 0.7,
+          maxWidthOrHeight: 1920,
         });
         newAcceptedFiles.push(
           Object.assign(compressedFile, {
