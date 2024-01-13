@@ -5,7 +5,7 @@ import Section from './Section';
 
 const About = () => {
   return (
-    <Container maxWidth='lg' style={{ marginTop: '3rem' }}>
+    <Container maxWidth='lg' style={{ marginTop: '3rem', overflow: 'hidden' }}>
       <NeonTypography
         animation='fadeIn'
         component='h1'

@@ -44,7 +44,7 @@ function App() {
           <CssBaseline />
           <Dialogs />
           <Header />
-          <main>
+          <main style={{ maxWidth: '100vw', overflow: 'hidden' }}>
             <ScrollToTop />
             <Switch>
               <Route exact path='/' component={Home} />
